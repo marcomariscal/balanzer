@@ -1,0 +1,32 @@
+{
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "password": {
+      "$id": "/properties/password",
+      "type": "string",
+      "title": "The Password Schema ",
+      "default": "",
+      "minLength": 5,
+      "maxLength": 55,
+      "examples": ["foo123"]
+    },
+    "email": {
+      "$id": "/properties/email",
+      "type": "string",
+      "minLength": 6,
+      "maxLength": 60,
+      "title": "The Email Schema ",
+      "default": "",
+      "examples": ["nice@gmail.com"]
+    },
+    "_token": {
+      "$id": "/properties/token",
+      "type": "string",
+      "title": "The Token Schema ",
+      "default": "",
+      "examples": ["foo123"]
+    }
+  }
+}
