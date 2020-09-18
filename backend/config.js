@@ -4,7 +4,11 @@ require("dotenv").config();
 
 const SECRET_KEY = process.env.SECRET_KEY || "test";
 
-const PORT = +process.env.PORT || 5000;
+const PORT = +process.env.PORT || 3001;
+
+// Shrimpy creds
+const SHRIMPY_PUBLIC_KEY = process.env.SHRIMPY_MASTER_API_PUBLIC_KEY;
+const SHRIMPY_PRIVATE_KEY = process.env.SHRIMPY_MASTER_API_PRIVATE_KEY;
 
 // database is:
 //
@@ -24,4 +28,6 @@ module.exports = {
   SECRET_KEY,
   PORT,
   DB_URI,
+  SHRIMPY_PUBLIC_KEY,
+  SHRIMPY_PRIVATE_KEY,
 };

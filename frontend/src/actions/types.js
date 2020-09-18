@@ -1,1 +1,31 @@
+// exchanges types
 export const FETCH_EXCHANGES = "FETCH_EXCHANGES";
+export const FETCH_EXCHANGE_ASSETS = "FETCH_EXCHANGE_ASSETS";
+
+// currentUser types
+export const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
+export const LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+export const FETCH_ACCOUNTS = "FETCH_ACCOUNTS";
+export const UPDATE_CURRENT_ACCOUNT = "UPDATE_CURRENT_ACCOUNT";
+export const FETCH_BALANCES = "FETCH_BALANCES";
+export const ACCOUNT_CREATED = "ACCOUNT_CREATED";
+export const ACCOUNT_CREATED_SUCCESS = "ACCOUNT_CREATED_SUCCESS";
+
+// users types
+export const FETCH_USER = "FETCH_USER";
+export const FETCH_USERS = "FETCH_USERS";
+
+// general types
+export const SHOW_ERRORS = "SHOW_ERRORS";
+export const RESET_ERRORS = "RESET_ERRORS";
+export const SHOW_SPINNER = "SHOW_SPINNER";
+export const END_SHOW_SPINNER = "END_SHOW_SPINNER";
+
+// trades types
+export const SUBMIT_TRADE_SUCCESS = "SUBMIT_TRADE_SUCCESS";
+export const FETCH_TRADES = "FETCH_TRADES";
+export const TRADE_SELECT_INPUT = "TRADE_SELECT_INPUT";
+export const TRADE_SELECT_OUTPUT = "TRADE_SELECT_OUTPUT";
+export const SHOW_TRADE_MODAL = "SHOW_TRADE_MODAL";
+export const CLOSE_TRADE_MODAL = "CLOSE_TRADE_MODAL";

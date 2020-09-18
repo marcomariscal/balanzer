@@ -1,10 +1,13 @@
-import { FETCH_EXCHANGE } from "../actions/types";
+import { FETCH_USERS } from "../actions/types";
 
-export default function rootReducer(state = {}, action) {
+const INITIAL_STATE = {
+  allUsers: [],
+};
+
+export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_EXCHANGES:
-      return { ...state, [action.exchange.exchange_id]: action.exchange };
-
+    case FETCH_USERS:
+      return { ...state, allUsers: action.users };
     default:
       return state;
   }

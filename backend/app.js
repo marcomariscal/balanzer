@@ -4,10 +4,15 @@ const express = require("express");
 
 const ExpressError = require("./helpers/ExpressError");
 
+const authRoutes = require("./routes/auth");
+const backtestRoutes = require("./routes/backtest");
 const exchangesRoutes = require("./routes/exchanges");
+const usersRoutes = require("./routes/users");
+const userAccountsRoutes = require("./routes/userAccounts");
+const userTradesRoutes = require("./routes/userTrades");
 
 const morgan = require("morgan");
-
+const cors = require("cors");
 const app = express();
 
 app.use(express.json());
@@ -15,7 +20,14 @@ app.use(express.json());
 // add logging system
 app.use(morgan("tiny"));
 
+app.use(cors());
+
+app.use("/login", authRoutes);
+app.use("/backtest", backtestRoutes);
 app.use("/exchanges", exchangesRoutes);
+app.use("/users", usersRoutes);
+app.use("/userAccounts", userAccountsRoutes);
+app.use("/userTrades", userTradesRoutes);
 
 /** 404 handler */
 

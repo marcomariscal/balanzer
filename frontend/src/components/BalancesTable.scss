@@ -1,0 +1,17 @@
+.BalancesTable {
+  width: 40%;
+  thead {
+    display: flex;
+    margin-bottom: 5px;
+    justify-content: space-evenly;
+    width: 100%;
+  }
+
+  th {
+    border: none !important;
+    font-weight: 600;
+    font-size: 14px;
+    color: rgb(162, 162, 162);
+    cursor: pointer;
+  }
+}

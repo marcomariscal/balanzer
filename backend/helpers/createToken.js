@@ -6,7 +6,7 @@ const { SECRET_KEY } = require("../config");
 function createToken(user) {
   let payload = {
     username: user.username,
-    shrimpy_user_id: user.shrimpy_user_id,
+    shrimpyUserId: user.shrimpy_user_id,
   };
 
   return jwt.sign(payload, SECRET_KEY);

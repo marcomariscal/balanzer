@@ -10,11 +10,21 @@ const router = express.Router();
 
 /** GET / => {exchanges: [exchange, ...]} */
 
-router.get("/", async function (req, res, next) {
+router.get("/", authRequired, async function (req, res, next) {
   try {
     const exchanges = await client.getSupportedExchanges();
-    console.log(exchanges);
     return res.json({ exchanges });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+/** GET /:exchange/assets => {assets: [asset, ...]} */
+
+router.get("/:exchange/assets", authRequired, async function (req, res, next) {
+  try {
+    const assets = await client.getExchangeAssets(req.params.exchange);
+    return res.json({ assets });
   } catch (err) {
     return next(err);
   }

@@ -35,10 +35,11 @@ function authRequired(req, res, next) {
 
 function ensureCorrectUser(req, res, next) {
   try {
-    const tokenStr = req.body._token;
+    const tokenStr = req.body._token || req.query._token;
 
     let token = jwt.verify(tokenStr, SECRET_KEY);
     res.locals.username = token.username;
+    res.locals.userId = token.userId;
 
     if (token.username === req.params.username) {
       return next();

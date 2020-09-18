@@ -1,8 +1,8 @@
 const db = require("../db");
 const bcrypt = require("bcrypt");
-const client = require("../helpers/shrimpy");
 const partialUpdate = require("../helpers/partialUpdate");
 const ExpressError = require("../helpers/ExpressError");
+const client = require("../helpers/shrimpy");
 
 const BCRYPT_WORK_FACTOR = 10;
 
@@ -15,9 +15,9 @@ class User {
     // try to find the user first
     const result = await db.query(
       `SELECT username, 
-              password, 
+              password,
               email,
-              shimpy_user_id
+              shrimpy_user_id
         FROM users 
         WHERE username = $1`,
       [data.username]
@@ -33,7 +33,7 @@ class User {
       }
     }
 
-    throw ExpressError("Invalid Password", 401);
+    throw new ExpressError("Invalid username or password", 401);
   }
 
   /** Register user with data. Returns new user data. */
@@ -55,14 +55,17 @@ class User {
 
     const hashedPassword = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
 
-    // create a shrimpy user to an associated user
-    const shrimpy_user_id = await client.createUser();
+    // create shrimpy user
+    const shrimpy_user_id = await client.createUser(data.username);
+
+    if (!shrimpy_user_id)
+      throw new ExpressError("Could not create user in Shrimpy");
 
     const result = await db.query(
       `INSERT INTO users 
           (username, password, email, shrimpy_user_id) 
-        VALUES ($1, $2, $3) 
-        RETURNING username, password, email`,
+        VALUES ($1, $2, $3, $4) 
+        RETURNING username, password, email, shrimpy_user_id`,
       [data.username, hashedPassword, data.email, shrimpy_user_id]
     );
 
@@ -73,7 +76,7 @@ class User {
 
   static async findAll() {
     const result = await db.query(
-      `SELECT username, email
+      `SELECT username, email, shrimpy_user_id
         FROM users
         ORDER BY username`
     );
@@ -96,6 +99,8 @@ class User {
     if (!user) {
       throw new ExpressError(`There exists no user '${username}'`, 404);
     }
+
+    return user;
   }
 
   /** Update user data with `data`.

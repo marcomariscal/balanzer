@@ -3,24 +3,22 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "./reducers/root";
+
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { store, persistedStore } from "./components/store";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
+/**
+ * Using PersistGate component from redux-persist to persist the redux store/state across refreshes
+ */
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <PersistGate loading={null} persistor={persistedStore}>
+        <App />
+      </PersistGate>
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")
