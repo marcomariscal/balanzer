@@ -4,8 +4,9 @@ import { Modal, Button } from "react-bootstrap";
 import AssetImage from "./AssetImage";
 import "./AssetPickerModal.scss";
 
-const AssetPickerModal = ({ handleChooseAsset, showModal, closeModal }) => {
+const AssetPickerModal = ({ handleAssetChange, showModal, closeModal }) => {
   const assets = useSelector((st) => st.assets);
+  const modalType = useSelector((st) => st.trades.modalType);
   return (
     <Modal
       scrollable={true}
@@ -21,7 +22,11 @@ const AssetPickerModal = ({ handleChooseAsset, showModal, closeModal }) => {
         {assets.map((a) => (
           <div className="asset-picker-modal-row" key={a.id}>
             <AssetImage symbol={a.symbol} />
-            <Button value={a.symbol} onClick={handleChooseAsset}>
+            <Button
+              name={modalType}
+              value={a.symbol}
+              onClick={handleAssetChange}
+            >
               {a.symbol}
             </Button>
           </div>

@@ -10,7 +10,12 @@ import {
 } from "../actions/types";
 import { totalBalanceUSD } from "../helpers/balanceHelpers";
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  accounts: [],
+  notCurrentAccounts: [],
+  currentAccount: {},
+  user: null,
+};
 
 export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -28,7 +33,7 @@ export default function rootReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         balances: action.balances,
-        totalBalancesUSD: totalBalanceUSD([...action.balances]),
+        totalBalanceUSD: totalBalanceUSD([...action.balances]),
       };
     case UPDATE_CURRENT_ACCOUNT:
       return { ...state, ...state.user, currentAccount: action.account };

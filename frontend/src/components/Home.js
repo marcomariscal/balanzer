@@ -11,7 +11,7 @@ function Home() {
       <div className="container text-center">
         <h1 className="mb-4 font-weight-bold">CFinance</h1>
         <p className="lead">Cryptocurrency Investing Made Easy</p>
-        {user.username ? (
+        {user ? (
           <h2>Welcome Back {user.username}!</h2>
         ) : (
           <Link className="btn btn-outline-dark font-weight-bold" to="/login">

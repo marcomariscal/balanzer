@@ -15,9 +15,9 @@ export function registerUserWithAPI(data) {
     dispatch(startLoad());
 
     try {
-      const { token, user } = await BackendAPI.register(data);
+      const { user } = await BackendAPI.register(data);
       const newUser = await BackendAPI.getUser(user.username);
-      dispatch(updateCurrentUserInStore({ token, newUser }));
+      dispatch(updateCurrentUserInStore(newUser));
       dispatch(authSuccess());
       return dispatch(stopLoad());
     } catch (err) {
@@ -32,11 +32,11 @@ export function loginUserWithAPI(data) {
     dispatch(startLoad());
 
     try {
-      const { token, user } = await BackendAPI.login(data);
+      const { user } = await BackendAPI.login(data);
 
       // update the user in state
       const loggedUser = await BackendAPI.getUser(user.username);
-      dispatch(updateCurrentUserInStore({ token, loggedUser }));
+      dispatch(updateCurrentUserInStore(loggedUser));
 
       // update all relevant user data
       dispatch(syncUserData(user.username));
@@ -172,7 +172,7 @@ function fetchBalances(balances) {
 }
 
 // gets all relevant user's account data at this moment for the current user and current account
-export function syncUserData(username, account) {
+export function syncUserData(username, account = null) {
   return async function (dispatch) {
     dispatch(startLoad());
     try {
@@ -185,8 +185,15 @@ export function syncUserData(username, account) {
       dispatch(fetchAccounts(accounts));
 
       // sync account balances
-      const balances = await BackendAPI.getAccountBalances(username, account);
+      const accountToUse = account ? account : accounts[0];
+      const balances = await BackendAPI.getAccountBalances(
+        user.username,
+        accountToUse.exchange
+      );
       dispatch(fetchBalances(balances));
+
+      // update current account
+      dispatch(updateCurrentAccountInState(accountToUse));
 
       return dispatch(stopLoad());
     } catch (error) {

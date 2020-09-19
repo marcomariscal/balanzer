@@ -50,11 +50,14 @@ function Login({ setToken }) {
 
     try {
       if (endpoint === "login") {
+        res = await BackendApi.login(data);
         dispatch(loginUserWithAPI(data));
       } else {
+        res = await BackendApi.register(data);
         dispatch(registerUserWithAPI(data));
       }
 
+      setToken(res.token);
       history.push("/dashboard");
     } catch (errors) {
       return setLoginInfo((l) => ({ ...l, formErrors: errors }));

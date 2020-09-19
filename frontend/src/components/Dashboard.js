@@ -7,7 +7,7 @@ import BalanceHistoryChart from "./BalanceHistoryChart";
 import Spinner from "./Spinner";
 
 const Exchanges = () => {
-  const { currentAccount, accounts, totalBalanceUSD, user } = useSelector(
+  const { currentAccount, totalBalanceUSD, user } = useSelector(
     (st) => st.currentUser
   );
   const { loading } = useSelector((st) => st.general);
@@ -23,7 +23,15 @@ const Exchanges = () => {
       }
     }
     getAccountBalances();
-  }, [dispatch, currentAccount, user.username]);
+  }, []);
+
+  if (!currentAccount) {
+    return (
+      <div className="Dashboard container">
+        <p>Please connect to an account</p>
+      </div>
+    );
+  }
 
   return (
     <div className="Dashboard container">

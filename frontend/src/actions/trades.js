@@ -5,6 +5,9 @@ import {
   TRADE_SELECT_OUTPUT,
   SHOW_TRADE_MODAL,
   CLOSE_TRADE_MODAL,
+  TRADE_SELECT_INPUT_VALUE,
+  TRADE_SELECT_OUTPUT_VALUE,
+  UPDATE_MODAL_TYPE,
 } from "./types";
 import BackendAPI from "../components/BackendAPI";
 import { startLoad, stopLoad } from "./general";
@@ -24,19 +27,19 @@ function submitTradeSuccess() {
   };
 }
 
-export function fetchFilledTrades() {
+export function fetchActiveTrades(username, account) {
   return async function (dispatch) {
     dispatch(startLoad());
-    // const response = await BackendAPI.getTrades(username);
-    // dispatch(tradesFetched(response));
+    const response = await BackendAPI.getTrades(username, account);
+    dispatch(activeTradesFetched(response));
     return dispatch(stopLoad());
   };
 }
 
-function tradesFetched(trades) {
+function activeTradesFetched(activeTrades) {
   return {
     type: FETCH_TRADES,
-    trades,
+    activeTrades,
   };
 }
 
@@ -66,6 +69,31 @@ function tradeOutputSelected(symbol) {
   };
 }
 
+export function updateTradeInputValue(value) {
+  return async function (dispatch) {
+    return dispatch(tradeInputValueSelected(value));
+  };
+}
+
+function tradeInputValueSelected(value) {
+  return {
+    type: TRADE_SELECT_INPUT_VALUE,
+    value,
+  };
+}
+
+export function updateTradeOutputValue(value) {
+  return async function (dispatch) {
+    return dispatch(tradeOutputValueSelected(value));
+  };
+}
+
+function tradeOutputValueSelected(value) {
+  return {
+    type: TRADE_SELECT_OUTPUT_VALUE,
+    value,
+  };
+}
 export function showModal() {
   return {
     type: SHOW_TRADE_MODAL,
@@ -75,5 +103,18 @@ export function showModal() {
 export function closeModal() {
   return {
     type: CLOSE_TRADE_MODAL,
+  };
+}
+
+export function updateModalType(type) {
+  return async function (dispatch) {
+    return dispatch(syncModalType(type));
+  };
+}
+
+function syncModalType(modalType) {
+  return {
+    type: UPDATE_MODAL_TYPE,
+    modalType,
   };
 }

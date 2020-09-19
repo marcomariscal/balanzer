@@ -5,7 +5,7 @@ import { Navbar, Nav } from "react-bootstrap/";
 import ExchangeDropDown from "./ExchangeDropDown";
 
 const Navigation = ({ logout }) => {
-  const { username } = useSelector((state) => state.currentUser.user);
+  const { user } = useSelector((state) => state.currentUser);
 
   const loggedInRender = (
     <>
@@ -48,7 +48,7 @@ const Navigation = ({ logout }) => {
         <Navbar.Brand as={Link} to="/">
           CFinance
         </Navbar.Brand>
-        {username ? loggedInRender : loggedOutRender}
+        {user ? loggedInRender : loggedOutRender}
       </Navbar>
     </div>
   );

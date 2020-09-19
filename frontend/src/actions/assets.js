@@ -1,10 +1,13 @@
 import { FETCH_EXCHANGE_ASSETS } from "./types";
 import BackendAPI from "../components/BackendAPI";
+import { startLoad, stopLoad } from "./general";
 
 export function getExchangeAssetsFromAPI(exchange) {
   return async function (dispatch) {
+    dispatch(startLoad());
     const response = await BackendAPI.getExchangeAssets(exchange);
-    return dispatch(fetchExchangeAssets(response));
+    dispatch(fetchExchangeAssets(response));
+    return dispatch(stopLoad());
   };
 }
 

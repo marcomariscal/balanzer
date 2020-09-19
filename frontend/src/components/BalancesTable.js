@@ -1,28 +1,41 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { formatUSD } from "../helpers/currencyHelpers";
+import { formatUSD, formatNative } from "../helpers/currencyHelpers";
 import { Table } from "react-bootstrap";
 import TableItem from "./TableItem";
+import Toggle from "./Toggle";
 import "./BalancesTable.scss";
 
 const BalancesTable = () => {
   const [usdValueSelected, toggleUsdValueSelected] = useState(true);
-  const { currAccountBalances } = useSelector((st) => st.userAccounts);
+  const { balances } = useSelector((st) => st.currentUser);
 
-  const tableRender = currAccountBalances.map((bal) => (
-    <TableItem
-      key={bal.symbol}
-      symbol={bal.symbol}
-      value={usdValueSelected ? formatUSD(bal.usdValue) : bal.nativeValue}
-    />
-  ));
+  const tableRender =
+    balances &&
+    balances.map((bal) => (
+      <TableItem
+        key={bal.symbol}
+        symbol={bal.symbol}
+        value={
+          usdValueSelected
+            ? formatUSD(bal.usdValue)
+            : formatNative(bal.nativeValue)
+        }
+      />
+    ));
 
-  const handleToggleBalanceType = () => {
+  const handleToggleUSD = () => {
     toggleUsdValueSelected(!usdValueSelected);
   };
 
   return (
     <div className="BalancesTable text-center justify-content-center align-items-center">
+      <Toggle
+        handleToggle={handleToggleUSD}
+        initialValue={usdValueSelected}
+        textPrimary="USD"
+        textSecondary="Native"
+      />
       <Table>
         <thead>
           <tr>

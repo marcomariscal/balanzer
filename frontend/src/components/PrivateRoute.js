@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 function PrivateRoute({ exact, path, children }) {
   const { user } = useSelector((st) => st.currentUser);
 
-  if (!user.username) {
+  if (!user) {
     return <Redirect to="/" />;
   }
 

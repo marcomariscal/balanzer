@@ -1,4 +1,4 @@
-import { formatUSD } from "./currencyHelpers";
+import { formatNative, formatUSD } from "./currencyHelpers";
 
 // accepts a list of balances
 export const totalBalanceUSD = (balances) => {
@@ -7,4 +7,12 @@ export const totalBalanceUSD = (balances) => {
   }, 0);
 
   return formatUSD(total);
+};
+
+export const getTokenBalance = (balances, tokenSymbol) => {
+  const balance = balances.filter((bal) => bal.symbol === tokenSymbol)[0]
+    ? balances.filter((bal) => bal.symbol === tokenSymbol)[0].nativeValue
+    : 0.0;
+
+  return formatNative(balance);
 };

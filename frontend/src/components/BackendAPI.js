@@ -89,6 +89,13 @@ class BackendApi {
     let res = await this.request("exchanges", data);
     return res.assets;
   }
+
+  // user trades endpoint
+  // pass in the exchange name you want to see the active trades for as a parameter
+  static async getTrades(username, account) {
+    let res = await this.request(`${username}/${account}/trades`);
+    return res.assets;
+  }
 }
 
 export default BackendApi;

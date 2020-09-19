@@ -16,17 +16,19 @@ const ExchangeDropDown = () => {
     dispatch(updateCurrentAccountInState(accountName));
   };
 
-  const accountsWithoutCurrentRender = notCurrentAccounts.map((a) => (
-    <NavDropdown.Item
-      key={a.id}
-      onClick={updateCurrentAccount}
-      title={a.exchange}
-      className="text-center"
-      value={a.exchange}
-    >
-      {a.exchange}
-    </NavDropdown.Item>
-  ));
+  const accountsWithoutCurrentRender = notCurrentAccounts.length
+    ? notCurrentAccounts.map((a) => (
+        <NavDropdown.Item
+          key={a.id}
+          onClick={updateCurrentAccount}
+          title={a.exchange}
+          className="text-center"
+          value={a.exchange}
+        >
+          {a.exchange}
+        </NavDropdown.Item>
+      ))
+    : null;
 
   const render =
     currentAccount && accounts.length ? (

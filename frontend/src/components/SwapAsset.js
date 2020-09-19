@@ -4,40 +4,33 @@ import { InputGroup, FormControl, Button } from "react-bootstrap";
 import {
   showModal as dispatchShowModal,
   closeModal,
-  tradeSelectInput,
-  tradeSelectOutput,
+  updateModalType,
 } from "../actions/trades";
 import AssetPickerModal from "./AssetPickerModal";
 import "./SwapAsset.scss";
 
 const SwapAsset = ({
   asset,
-  directionText,
   type,
+  value,
   balance,
-  handleAssetValueChange,
+  onValueChange,
+  onAssetChange,
 }) => {
   const { showTradeModal } = useSelector((st) => st.trades);
   const dispatch = useDispatch();
 
   // handling the modal showing and closing and sending data to store
-  const handleShowModal = () => dispatch(dispatchShowModal());
-  const handleCloseModal = () => dispatch(closeModal());
-
-  // handling when the user selects an asset in the modal
-  const handleChooseAsset = (e) => {
-    const { value: symbol } = e.target;
-    console.log(type === "input");
-    type === "input"
-      ? dispatch(tradeSelectInput(symbol))
-      : dispatch(tradeSelectOutput(symbol));
-    closeModal();
+  const handleShowModal = () => {
+    dispatch(dispatchShowModal());
+    dispatch(updateModalType(type));
   };
+  const handleCloseModal = () => dispatch(closeModal());
 
   return (
     <div className="SwapAsset">
       <div className="top-wrapper">
-        <p>{directionText}</p>
+        <p>{type === "input" ? "From" : "To (estimate)"}</p>
         <p>Balance: {balance}</p>
       </div>
       <div className="bottom-wrapper">
@@ -46,18 +39,27 @@ const SwapAsset = ({
             className="token-amount-input"
             placeholder="0.0"
             name={type}
-            value={handleAssetValueChange}
+            value={value}
+            asset={asset}
+            onChange={onValueChange}
           />
         </InputGroup>
         {type === "input" && <Button className="max-button">Max</Button>}
-        <Button className="asset-select-button" onClick={handleShowModal}>
+        <Button
+          className={
+            asset === "Select a token"
+              ? "asset-not-selected-button"
+              : "asset-select-button"
+          }
+          onClick={handleShowModal}
+        >
           {asset}
         </Button>
       </div>
       <AssetPickerModal
         showModal={showTradeModal}
         closeModal={handleCloseModal}
-        handleChooseAsset={handleChooseAsset}
+        handleAssetChange={onAssetChange}
       />
     </div>
   );

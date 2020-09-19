@@ -1,67 +1,80 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PrimaryButton from "./PrimaryButton";
 import SwapAsset from "./SwapAsset";
-import { submitTradeInAPI } from "../actions/trades";
+import { submitTradeInAPI, closeModal } from "../actions/trades";
+import { getTokenBalance } from "../helpers/balanceHelpers";
 import "./TradeWidget.scss";
 
 const TradeWidget = () => {
   const dispatch = useDispatch();
-  const { accountBalances } = useSelector((st) => st.currentUser);
-  const { input, output } = useSelector((st) => st.trades);
+  const { balances } = useSelector((st) => st.currentUser);
 
-  const inputNativeValue = accountBalances.filter(
-    (acc) => acc.symbol === input
-  );
+  const [tradeDetails, setTradeDetails] = useState({
+    input: { asset: "ETH", value: "0.0" },
+    output: { asset: "Select a token", value: "0.0" },
+  });
 
-  console.log(input, inputNativeValue);
+  const { input, output } = tradeDetails;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const tradeDetails = {};
+    dispatch(submitTradeInAPI(tradeDetails));
     console.log("trade submitted");
   };
 
-  //   useEffect(() => {
-  //     async function getExchangeValue() {
-  //       const outputValue = 1;
-  //       return outputValue;
-  //       //   dispatch(getExchangeValueFromAPI(input))
-  //     }
-  //     getExchangeValue();
-  //   }, [input, output]);
+  const handleValueChange = (e) => {
+    const { name, value } = e.target;
 
-  //   useEffect(() => {
-  //     async function updateTradeDetails() {
-  //       dispatch(updateTradeDetails());
-  //       //   dispatch(getExchangeValueFromAPI(input))
-  //     }
-  //     getExchangeValue();
-  //   }, [input, output]);
-
-  const derivedNativeValue = 1;
-
-  const submitTrade = (e) => {
-    e.preventDefault();
-
-    const data = {};
-    dispatch(submitTradeInAPI(data));
-    console.log("form submitted");
+    setTradeDetails((fData) => ({
+      ...fData,
+      [name]: {
+        ...fData[name],
+        value: value,
+      },
+    }));
   };
+
+  const handleAssetChange = (e) => {
+    const { name, value } = e.target;
+    setTradeDetails((fData) => ({
+      ...fData,
+      [name]: {
+        ...fData[name],
+        asset: value,
+      },
+    }));
+    dispatch(closeModal());
+  };
+  const inputBalance = getTokenBalance(balances, tradeDetails.input.asset);
+  const outputBalance = getTokenBalance(balances, tradeDetails.output.asset);
+
+  useEffect(() => {
+    function updateBalances() {
+      const outputBalance = getTokenBalance(balances, output.asset);
+    }
+    updateBalances();
+  }, [input.asset, output.asset]);
 
   return (
     <div className="TradeWidget">
       <form>
         <SwapAsset
-          asset={input}
-          directionText="From"
-          type="input"
-          balance={inputNativeValue}
+          asset={input.asset}
+          type={"input"}
+          value={input.value}
+          balance={inputBalance}
+          onValueChange={handleValueChange}
+          onAssetChange={handleAssetChange}
         />
         <SwapAsset
-          asset={output}
-          type="output"
-          directionText="To (estimate)"
-          balance={derivedNativeValue}
+          asset={output.asset}
+          type={"output"}
+          value={output.value}
+          balance={outputBalance}
+          onValueChange={handleValueChange}
+          onAssetChange={handleAssetChange}
         />
         <PrimaryButton dispatchFunc={handleSubmit} text="Swap" />
       </form>
