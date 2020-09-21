@@ -1,8 +1,11 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 
+html,
 body {
   background-color: #f9fbfd;
   height: 100vh;
+  margin: 0;
+  overflow: hidden;
 }
 
 input:focus,

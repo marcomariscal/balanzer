@@ -1,11 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { getTokenBalance } from "../helpers/balanceHelpers";
 import { Modal, Button } from "react-bootstrap";
 import AssetImage from "./AssetImage";
 import "./AssetPickerModal.scss";
 
 const AssetPickerModal = ({ handleAssetChange, showModal, closeModal }) => {
   const assets = useSelector((st) => st.assets);
+  const { balances } = useSelector((st) => st.currentUser);
   const modalType = useSelector((st) => st.trades.modalType);
   return (
     <Modal
@@ -21,13 +23,16 @@ const AssetPickerModal = ({ handleAssetChange, showModal, closeModal }) => {
       <Modal.Body>
         {assets.map((a) => (
           <div className="asset-picker-modal-row" key={a.id}>
-            <AssetImage symbol={a.symbol} />
             <Button
               name={modalType}
               value={a.symbol}
               onClick={handleAssetChange}
             >
-              {a.symbol}
+              <AssetImage symbol={a.symbol} />
+              <span className="symbol mx-1">{a.symbol}</span>
+              <span className="token-balance mx-3">
+                {getTokenBalance(balances, a.symbol)}
+              </span>
             </Button>
           </div>
         ))}

@@ -128,6 +128,7 @@ export function createAccountInAPI(username, data) {
 
       dispatch(stopLoad());
     } catch (err) {
+      dispatch(stopLoad());
       dispatch(showErrors(err));
     }
   };

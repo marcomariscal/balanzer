@@ -1,9 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Button } from "react-bootstrap";
 import "./PrimaryButton.scss";
 
-const PrimaryButton = ({ dispatchFunc, text }) => {
+const PrimaryButton = ({ dispatchFunc, text, disabled }) => {
   const dispatch = useDispatch();
 
   const handleClick = (e) => {
@@ -12,9 +11,14 @@ const PrimaryButton = ({ dispatchFunc, text }) => {
   };
 
   return (
-    <Button type="submit" onClick={handleClick}>
-      {text}
-    </Button>
+    <button
+      className={`PrimaryButton ${disabled && "disabled"}`}
+      type="submit"
+      onClick={handleClick}
+      disabled={disabled && disabled}
+    >
+      <span>{disabled ? "Enter an amount" : text}</span>
+    </button>
   );
 };
 

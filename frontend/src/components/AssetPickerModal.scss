@@ -6,22 +6,56 @@
   align-self: center !important;
   height: 80vh !important;
   display: flex !important;
+  .modal-title {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    font-weight: 500;
+    font-size: 16px;
+  }
 }
 
 .asset-picker-modal-row {
-  left: 0px;
-  top: 1008px;
   height: 56px;
-  width: 100%;
   cursor: pointer;
 
-  .asset-picker-modal-row:hover {
-    background-color: rgb(233, 227, 227);
-  }
+  margin: 0px;
+  min-width: 0px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  display: flex;
+  opacity: 1;
+
   button {
+    height: inherit;
+    width: inherit !important;
     outline: none;
-    background-color: whitesmoke;
+    border: none;
+    background-color: white;
     color: black;
-    width: 5rem;
+    min-width: 100% !important;
   }
+}
+
+.modal-body {
+  padding: 0rem !important;
+}
+
+.asset-picker-modal-row button:hover {
+  background-color: rgb(247, 248, 250);
+  color: black;
+}
+
+.token-balance {
+  float: right;
+  font-weight: 400;
+}
+
+img {
+  float: left;
+}
+.symbol {
+  float: left;
 }

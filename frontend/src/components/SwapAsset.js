@@ -7,6 +7,9 @@ import {
   updateModalType,
 } from "../actions/trades";
 import AssetPickerModal from "./AssetPickerModal";
+import AssetImage from "./AssetImage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import "./SwapAsset.scss";
 
 const SwapAsset = ({
@@ -16,6 +19,8 @@ const SwapAsset = ({
   balance,
   onValueChange,
   onAssetChange,
+  onMaxValueSelect,
+  disabled,
 }) => {
   const { showTradeModal } = useSelector((st) => st.trades);
   const dispatch = useDispatch();
@@ -42,9 +47,14 @@ const SwapAsset = ({
             value={value}
             asset={asset}
             onChange={onValueChange}
+            disabled={disabled}
           />
         </InputGroup>
-        {type === "input" && <Button className="max-button">Max</Button>}
+        {type === "input" && (
+          <Button onClick={onMaxValueSelect} className="max-button">
+            Max
+          </Button>
+        )}
         <Button
           className={
             asset === "Select a token"
@@ -53,7 +63,11 @@ const SwapAsset = ({
           }
           onClick={handleShowModal}
         >
-          {asset}
+          <span className="token-symbol-container">
+            {asset !== "Select a token" && <AssetImage symbol={asset} />}
+            <span className="token-symbol">{asset}</span>
+            <FontAwesomeIcon icon={faAngleDown} />
+          </span>
         </Button>
       </div>
       <AssetPickerModal

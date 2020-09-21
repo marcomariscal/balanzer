@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap/";
 import ExchangeDropDown from "./ExchangeDropDown";
+import "./Navigation.scss";
 
 const Navigation = ({ logout }) => {
   const { user } = useSelector((state) => state.currentUser);
@@ -24,7 +25,7 @@ const Navigation = ({ logout }) => {
         </Nav.Link>
       </Nav>
 
-      <Nav className="ml-auto">
+      <Nav className="navbar right-side">
         <ExchangeDropDown />
 
         <Nav.Link as={Link} to="/logout" onClick={logout}>
@@ -44,7 +45,7 @@ const Navigation = ({ logout }) => {
 
   return (
     <div className="Navigation">
-      <Navbar bg="dark" variant="dark">
+      <Navbar>
         <Navbar.Brand as={Link} to="/">
           CFinance
         </Navbar.Brand>

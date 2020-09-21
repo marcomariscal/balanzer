@@ -40,6 +40,11 @@ class BackendApi {
     return res.assets;
   }
 
+  static async getExchangeTickers(exchange) {
+    let res = await this.request(`exchanges/${exchange}/tickers`);
+    return res.tickers;
+  }
+
   // auth endpoints
   static async login(data) {
     let res = await this.request(`login`, data, "post");

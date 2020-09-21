@@ -5,6 +5,8 @@
   border-radius: 20px;
   background-color: rgb(255, 255, 255);
   z-index: 1;
+  border-color: rgb(217, 227, 248);
+  border: 1px solid rgb(247, 248, 250);
   p {
     display: inline;
     margin: 0px;
@@ -27,9 +29,10 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    padding: 0.75rem 0.75rem 0.75rem 1rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
   }
-  .token-amount-input {
+  .token-amount-input,
+  .token-amount-input:disabled {
     color: rgb(0, 0, 0);
     width: 0px;
     position: relative;
@@ -43,12 +46,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0px;
-    appearance: textfield;
+    opacity: 0.6;
   }
   .max-button {
-    height: 100%;
-    background-color: rgb(217, 227, 248);
-    border: 1px solid rgb(217, 227, 248);
+    background-color: rgb(66, 248, 188);
+    border: 1px solid rgb(66, 248, 188);
     border-radius: 0.5rem;
     font-size: 0.875rem;
     font-weight: 500;
@@ -57,18 +59,61 @@
     margin-right: 0.5rem;
     color: black;
     align-items: center;
+    padding: 0.25rem;
   }
-  .max-button:hover {
-    outline: blue;
-    background-color: rgb(217, 227, 248);
-    color: black;
+  .max-button:hover,
+  .max-button:focus {
+    outline: rgb(2, 104, 73) !important;
+    background-color: rgb(66, 248, 188) !important;
+    color: rgb(1, 48, 26) !important;
   }
 
   .asset-select-button {
-    background-color: rgb(236, 232, 232);
+    background-color: white;
     align-items: center;
     height: 2.2rem;
     font-size: 20px;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+    border-radius: 12px;
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    padding: 0px 0.5rem;
+  }
+  .asset-select-button:focus {
+    background-color: inherit;
+    color: inherit;
+  }
+
+  button {
+    span {
+      display: flex;
+      .icon {
+        margin: 0px 0.25rem 0px 0.5rem;
+        height: 35%;
+      }
+      svg {
+        margin: 0px 0.25rem 0px 0.75rem;
+        font-size: 16px;
+      }
+    }
+    .token-symbol-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .asset-not-selected-button {
+    background-color: #009185;
+    color: white !important;
+    align-items: center;
+    width: 15rem;
+    height: 2.2rem;
+    font-size: 16px;
     font-weight: 500;
     color: rgb(0, 0, 0);
     border-radius: 12px;
@@ -80,21 +125,16 @@
     padding: 0px 0.5rem;
   }
 
-  .asset-not-selected-button {
-    background-color: pink;
-    align-items: center;
-    height: 2.2rem;
-    font-size: 20px;
-    font-weight: 500;
-    color: rgb(0, 0, 0);
-    border-radius: 12px;
-    box-shadow: none;
-    outline: none;
-    cursor: pointer;
-    user-select: none;
-    border: none;
-    padding: 0px 0.5rem;
+  .asset-select-button:hover {
+    background-color: rgb(247, 248, 250);
+    color: black;
   }
+
+  .asset-not-selected-button:hover {
+    background-color: #009185;
+    opacity: 0.9;
+  }
+
   .asset button:hover,
   button:active,
   button:focus {
