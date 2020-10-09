@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { createAccountInAPI } from "../actions/currentUser";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import exchangesWithPassphrases from "../helpers/exchangesWithPassphrase";
 import Alert from "./Alert";
-import Spinner from "./Spinner";
 import "./ExchangeConnectionForm.scss";
+import PrimaryButton from "./PrimaryButton";
 
 const ExchangeConnectionForm = ({ exchangeName }) => {
-  const { currentUser, userId } = useSelector((st) => st.users);
-  const { loading, errors } = useSelector((st) => st.general);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { user, creatingAccount } = useSelector((st) => st.currentUser);
 
   // show the passphrase input if the exchange requires it
   const hasPassphrase =
     exchangesWithPassphrases.indexOf(exchangeName) !== -1 ? true : false;
-
-  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     publicKey: "",
@@ -23,34 +23,42 @@ const ExchangeConnectionForm = ({ exchangeName }) => {
     passphrase: "",
     formErrors: [],
   });
+  const [inValidForm, setInvalidForm] = useState(true);
 
   const handleChange = (e) => {
+    setInvalidForm(false);
     const { name, value } = e.target;
     setFormData((fData) => ({ ...fData, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const { publicKey, privateKey, passphrase } = formData;
-      const accountData = {
-        userId,
-        exchangeName,
-        publicKey,
-        privateKey,
-        passphrase,
-      };
 
-      // create exchange account connection using the api key user inputted data and the exchange name
-      dispatch(createAccountInAPI(currentUser, accountData));
+    const { publicKey, privateKey, passphrase } = formData;
+    const { username, shrimpy_user_id } = user;
+    const accountData = {
+      userId: shrimpy_user_id,
+      exchangeName,
+      publicKey,
+      privateKey,
+      passphrase,
+    };
+
+    // create exchange account connection using the api key user inputted data and the exchange name
+    try {
+      dispatch(createAccountInAPI(username, accountData));
+      history.push("/dashboard");
     } catch (errors) {
-      return setFormData((fData) => ({ ...fData, formErrors: errors }));
+      setFormData((fData) => ({
+        ...fData,
+        formErrors: [errors],
+      }));
     }
   };
 
   return (
     <div className="ExchangeConnectionForm">
-      <form onSubmit={handleSubmit}>
+      <form autoComplete="off">
         <Form.Group>
           <Form.Label>Public Api Key</Form.Label>
           <Form.Control
@@ -88,11 +96,18 @@ const ExchangeConnectionForm = ({ exchangeName }) => {
             </Form.Text>
           </Form.Group>
         )}
-        {errors.length ? <Alert type="danger" messages={errors} /> : null}
+        {formData.formErrors.length ? (
+          <Alert type="danger" messages={formData.formErrors} />
+        ) : null}
 
-        <Button variant="dark" type="submit">
-          {loading ? <Spinner /> : <>Connect to {exchangeName}</>}
-        </Button>
+        <PrimaryButton
+          submitFunc={handleSubmit}
+          textDisabled={`Connect to ${exchangeName}`}
+          textPrimary={`Connect to ${exchangeName}`}
+          loadingText="Connecting..."
+          disabled={inValidForm}
+          loading={creatingAccount}
+        />
       </form>
     </div>
   );

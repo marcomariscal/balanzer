@@ -73,7 +73,7 @@ const SwapAsset = ({
       <AssetPickerModal
         showModal={showTradeModal}
         closeModal={handleCloseModal}
-        handleAssetChange={onAssetChange}
+        handleAssetSelect={onAssetChange}
       />
     </div>
   );

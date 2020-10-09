@@ -1,0 +1,60 @@
+.modal-content {
+  border-radius: 20px !important;
+  box-shadow: rgba(47, 128, 237, 0.05) 0px 4px 8px 0px !important;
+  padding: 0px !important;
+  width: 30vw !important;
+  align-self: center !important;
+  display: flex !important;
+  .modal-title {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+}
+
+.asset-picker-modal-row {
+  height: 56px;
+  cursor: pointer;
+
+  margin: 0px;
+  min-width: 0px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  display: flex;
+  opacity: 1;
+
+  button {
+    height: inherit;
+    width: inherit !important;
+    outline: none;
+    border: none;
+    background-color: white;
+    color: black;
+    min-width: 100% !important;
+  }
+}
+
+.modal-body {
+  padding: 0rem !important;
+}
+
+.asset-picker-modal-row button:hover {
+  background-color: rgb(247, 248, 250);
+  color: black;
+}
+
+.token-balance {
+  float: right;
+  font-weight: 400;
+}
+
+img {
+  float: left;
+}
+.symbol {
+  float: left;
+}

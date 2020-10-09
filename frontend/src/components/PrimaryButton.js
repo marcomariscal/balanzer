@@ -1,23 +1,39 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import "./PrimaryButton.scss";
+import { Spinner } from "react-bootstrap";
 
-const PrimaryButton = ({ dispatchFunc, text, disabled }) => {
-  const dispatch = useDispatch();
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    dispatch(dispatchFunc());
-  };
-
+const PrimaryButton = ({
+  className,
+  submitFunc,
+  textDisabled,
+  textPrimary,
+  loadingText,
+  disabled,
+  loading,
+}) => {
   return (
     <button
-      className={`PrimaryButton ${disabled && "disabled"}`}
+      className={`PrimaryButton ${className ? className : ""} ${
+        disabled ? " disabled" : ""
+      }`}
       type="submit"
-      onClick={handleClick}
+      onClick={submitFunc}
       disabled={disabled && disabled}
     >
-      <span>{disabled ? "Enter an amount" : text}</span>
+      {loading && (
+        <Spinner
+          as="span"
+          className="mx-2"
+          variant="light"
+          animation="border"
+          size="sm"
+        />
+      )}
+      {!loading ? (
+        <span>{disabled ? textDisabled : textPrimary}</span>
+      ) : (
+        loadingText
+      )}
     </button>
   );
 };

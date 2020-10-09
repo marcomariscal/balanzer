@@ -5,9 +5,13 @@ import { startLoad, stopLoad } from "./general";
 export function getExchangeAssetsFromAPI(exchange) {
   return async function (dispatch) {
     dispatch(startLoad());
-    const response = await BackendAPI.getExchangeAssets(exchange);
-    dispatch(fetchExchangeAssets(response));
-    return dispatch(stopLoad());
+    try {
+      const response = await BackendAPI.getExchangeAssets(exchange);
+      dispatch(fetchExchangeAssets(response));
+      return dispatch(stopLoad());
+    } catch (error) {
+      dispatch(stopLoad());
+    }
   };
 }
 

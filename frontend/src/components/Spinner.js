@@ -4,7 +4,7 @@ import { Spinner as Loading } from "react-bootstrap";
 const Spinner = () => {
   return (
     <div className="Spinner">
-      <Loading animation="grow" />
+      <Loading className="loading-icon" animation="grow" />
     </div>
   );
 };

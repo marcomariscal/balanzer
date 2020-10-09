@@ -5,7 +5,7 @@ import { Modal, Button } from "react-bootstrap";
 import AssetImage from "./AssetImage";
 import "./AssetPickerModal.scss";
 
-const AssetPickerModal = ({ handleAssetChange, showModal, closeModal }) => {
+const AssetPickerModal = ({ handleAssetSelect, showModal, closeModal }) => {
   const assets = useSelector((st) => st.assets);
   const { balances } = useSelector((st) => st.currentUser);
   const modalType = useSelector((st) => st.trades.modalType);
@@ -26,7 +26,7 @@ const AssetPickerModal = ({ handleAssetChange, showModal, closeModal }) => {
             <Button
               name={modalType}
               value={a.symbol}
-              onClick={handleAssetChange}
+              onClick={handleAssetSelect}
             >
               <AssetImage symbol={a.symbol} />
               <span className="symbol mx-1">{a.symbol}</span>

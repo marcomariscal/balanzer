@@ -31,6 +31,9 @@ function App() {
   return (
     <div className="App">
       <Navigation logout={handleLogout} />
+      <p className="text-center lead mt-3">
+        This project is in beta. Use at your own risk.
+      </p>
       <Routes setToken={setToken} />
     </div>
   );

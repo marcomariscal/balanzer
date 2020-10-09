@@ -61,6 +61,9 @@ class User {
     if (!shrimpy_user_id)
       throw new ExpressError("Could not create user in Shrimpy");
 
+    // create API keys in shrimpy for user management
+    await client.createApiKeys(shrimpy_user_id);
+
     const result = await db.query(
       `INSERT INTO users 
           (username, password, email, shrimpy_user_id) 

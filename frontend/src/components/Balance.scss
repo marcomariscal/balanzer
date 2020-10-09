@@ -1,4 +1,6 @@
 .Balance {
+  justify-content: flex-end;
+  margin-left: auto;
   p {
     text-transform: uppercase;
     font-size: small;
@@ -8,6 +10,6 @@
   .total-balance span {
     font-size: 30px;
     font-weight: 600;
-    color: rgb(15, 15, 99);
+    color: #009185;
   }
 }

@@ -2,11 +2,8 @@ import React from "react";
 
 const Backtest = () => {
   return (
-    <div className="text-center">
-      <h1>backtest route</h1>
-      <form>
-        <select>smoething</select>
-      </form>
+    <div className="container text-center">
+      <h2>Coming soon...</h2>
     </div>
   );
 };

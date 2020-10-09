@@ -1,0 +1,46 @@
+.BarTableItem {
+  align-items: center;
+  margin: 32px 0;
+  display: flex;
+}
+.title {
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+}
+
+.bar {
+  background: #f0f5f9;
+  width: 100%;
+  margin: 0 12px;
+  border-radius: 12px;
+  display: block;
+}
+
+.bar-fill {
+  background-color: #00d897;
+  transition: 0.3s;
+  border-radius: 12px;
+  height: 12px;
+  display: block;
+}
+
+.bar-value,
+.bar-actual-value,
+.bar-target-value {
+  display: flex;
+  font-weight: 500;
+  font-size: 14px;
+  width: 120px;
+  justify-content: flex-end;
+  flex-basis: auto;
+  flex-grow: 1;
+  color: #002237;
+}
+
+.bar-actual-value,
+.bar-target-value {
+  margin: 0 12px;
+}

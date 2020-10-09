@@ -1,9 +1,7 @@
 .Navigation {
   display: grid;
-  grid-template-columns: 1fr 20px;
-  -webkit-box-pack: justify;
+  grid-template-columns: 1fr 0px;
   justify-content: space-between;
-  -webkit-box-align: center;
   align-items: center;
   flex-direction: row;
   width: 100%;
@@ -18,5 +16,8 @@
 
   .Navigation.navbar {
     padding: 0;
+  }
+  .nav-link {
+    margin: 0px 3px 0px 3px;
   }
 }

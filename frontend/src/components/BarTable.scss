@@ -1,0 +1,64 @@
+.barchart-title {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 350;
+  display: flex;
+  justify-content: space-between;
+}
+
+.barchart-wrapper {
+  background-color: white;
+  position: relative;
+  width: 60%;
+  background: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px,
+    rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.01) 0px 24px 32px;
+  border-radius: 30px;
+  padding: 1rem;
+  text-align: center;
+  margin: auto;
+}
+
+.barchart-right-title {
+  display: flex;
+  font-weight: 500;
+  justify-content: flex-end;
+  flex-basis: auto;
+  flex-grow: 1;
+  color: #002237;
+}
+
+.barchart-right-title-item {
+  margin: 0 6px;
+}
+
+.Toggle.button,
+.Toggle.button:active,
+.Toggle.button:focus {
+  width: 8rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  background: rgba(0, 216, 151, 0.15);
+  color: #00d897;
+  border: none;
+  font-weight: 500;
+  float: left;
+}
+
+.Toggle.button:hover {
+  width: 8rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  background: rgba(0, 216, 151, 0.15);
+  color: #00d897;
+  border: none;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.barchart-header {
+  display: flex;
+  align-items: center;
+}

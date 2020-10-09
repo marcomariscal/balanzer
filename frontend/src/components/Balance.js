@@ -1,12 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import "./Balance.scss";
 
-const Balance = ({ balance }) => {
+const Balance = () => {
+  const { totalBalanceUSD } = useSelector((st) => st.currentUser);
   return (
     <div className="Balance text-right">
-      <p>Current Portfolio Balance</p>
+      <p>Portfolio Balance</p>
       <p className="total-balance">
-        <span>{balance}</span>
+        <span>{totalBalanceUSD}</span>
       </p>
     </div>
   );

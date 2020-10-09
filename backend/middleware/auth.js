@@ -35,7 +35,7 @@ function authRequired(req, res, next) {
 
 function ensureCorrectUser(req, res, next) {
   try {
-    const tokenStr = req.body._token || req.query._token;
+    const tokenStr = req.body._token || req.query._token || req.params._token;
 
     let token = jwt.verify(tokenStr, SECRET_KEY);
     res.locals.username = token.username;
@@ -48,7 +48,9 @@ function ensureCorrectUser(req, res, next) {
     // throw an error, so we catch it in our catch, below
     throw new Error();
   } catch (err) {
-    return next(new ExpressError("Unauthorized", 401));
+    return next(
+      new ExpressError("Unauthorized: please ensure you are logged in", 401)
+    );
   }
 }
 

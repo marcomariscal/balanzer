@@ -9,6 +9,9 @@ import {
   UPDATE_MODAL_TYPE,
   TRADE_SELECT_INPUT_VALUE,
   TRADE_SELECT_OUTPUT_VALUE,
+  UPDATE_LATEST_TRADE,
+  SUBMIT_TRADE_END,
+  SUBMIT_TRADE_START,
 } from "../actions/types";
 
 const INITIAL_STATE = {};
@@ -36,6 +39,12 @@ export default function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, modalType: action.modalType };
     case FETCH_TRADES:
       return { ...state, filledTrades: action.trades };
+    case UPDATE_LATEST_TRADE:
+      return { ...state, latestTrade: action.trade };
+    case SUBMIT_TRADE_START:
+      return { ...state, submittingTrade: true };
+    case SUBMIT_TRADE_END:
+      return { ...state, submittingTrade: false };
     case LOGOUT_CURRENT_USER:
       return INITIAL_STATE;
     default:

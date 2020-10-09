@@ -9,11 +9,10 @@ import Dashboard from "./Dashboard";
 import Automate from "./Automate";
 import Trade from "./Trade";
 import Backtest from "./Backtest";
-import "./Routes.scss";
 
 const Routes = ({ setToken }) => {
   return (
-    <div className="Routes pt-5">
+    <div className="Routes">
       <Switch>
         <Route exact path="/">
           <Home />

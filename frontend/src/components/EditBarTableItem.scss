@@ -1,0 +1,73 @@
+.EditBarTableItem {
+  align-items: center;
+  margin: 32px 0;
+  display: flex;
+}
+.title {
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+}
+
+.bar {
+  background: #f0f5f9;
+  width: 100%;
+  margin: 0 12px;
+  border-radius: 12px;
+  display: block;
+  height: 12px;
+}
+
+.bar-value {
+  display: flex;
+  font-weight: 500;
+  justify-content: flex-end;
+  flex-basis: auto;
+  flex-grow: 1;
+  color: #002237;
+}
+
+.bar-actual-value,
+.bar-target-value {
+  margin: 0 12px;
+  display: block;
+}
+
+.input-range {
+  display: flex;
+}
+
+.input-range__label {
+  color: white !important;
+  font-size: 0 !important;
+}
+
+.input-range__track--active {
+  background: #00d897 !important;
+}
+.input-range__slider {
+  background: #00d897 !important;
+  border: 1px solid #f3abef !important;
+  margin-top: -0.85rem !important;
+  box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px,
+    rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.01) 0px 24px 32px !important;
+}
+
+.input-range__track {
+  height: 100% !important;
+  background: #00d897 !important;
+  border-radius: 12px !important;
+}
+
+.input-range__track--background {
+  height: 12px !important;
+  margin: 0 !important;
+  background: #f0f5f9 !important;
+  width: 100% !important;
+  border-radius: 12px !important;
+  display: block !important;
+  position: relative !important;
+  top: 0% !important;
+}

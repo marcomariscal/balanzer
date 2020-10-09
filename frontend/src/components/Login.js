@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "./Login.scss";
 import Alert from "./Alert";
+import PrimaryButton from "./PrimaryButton";
 import { registerUserWithAPI, loginUserWithAPI } from "../actions/currentUser";
 import BackendApi from "./BackendAPI";
 
@@ -10,6 +11,7 @@ function Login({ setToken }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [activeView, setActiveView] = useState("login");
   const [loginInfo, setLoginInfo] = useState({
     username: "",
@@ -47,7 +49,7 @@ function Login({ setToken }) {
     }
 
     let res;
-
+    setIsLoading(true);
     try {
       if (endpoint === "login") {
         res = await BackendApi.login(data);
@@ -58,8 +60,10 @@ function Login({ setToken }) {
       }
 
       setToken(res.token);
+      setIsLoading(false);
       history.push("/dashboard");
     } catch (errors) {
+      setIsLoading(false);
       return setLoginInfo((l) => ({ ...l, formErrors: errors }));
     }
   }
@@ -88,59 +92,58 @@ function Login({ setToken }) {
 
   return (
     <div className="Login">
-      <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-        <div className="d-flex justify-content-end">
-          <div className="btn-group">
-            <button
-              className={`btn btn-dark ${loginActive ? "active" : ""} `}
-              onClick={setLoginView}
-            >
-              Login
-            </button>
-            <button
-              className={`btn btn-outline-dark ${loginActive ? "" : "active"} `}
-              onClick={setSignupView}
-            >
-              Sign up
-            </button>
-          </div>
+      <div className="login-signup-buttons">
+        <div className="btn-group">
+          <button
+            className={`btn btn-login ${loginActive ? "active" : ""} `}
+            onClick={setLoginView}
+          >
+            Login
+          </button>
+          <button
+            className={`btn btn-signup ${loginActive ? "" : "active"} `}
+            onClick={setSignupView}
+          >
+            Sign up
+          </button>
         </div>
-        <div className="card">
-          <div className="card-body">
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Username</label>
-                <input
-                  name="username"
-                  className="form-control"
-                  value={loginInfo.username}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  className="form-control"
-                  value={loginInfo.password}
-                  onChange={handleChange}
-                />
-              </div>
-              {loginActive ? "" : signupFields}
-              {loginInfo.formErrors.length ? (
-                <Alert type="danger" messages={loginInfo.formErrors} />
-              ) : null}
+      </div>
+      <div className="card">
+        <div className="card-body">
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Username</label>
+              <input
+                name="username"
+                className="form-control"
+                value={loginInfo.username}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                className="form-control"
+                value={loginInfo.password}
+                onChange={handleChange}
+              />
+            </div>
+            {loginActive ? "" : signupFields}
+            {loginInfo.formErrors.length ? (
+              <Alert type="danger" messages={loginInfo.formErrors} />
+            ) : null}
 
-              <button
-                type="submit"
-                className="btn btn-dark float-right"
-                onSubmit={handleSubmit}
-              >
-                Submit
-              </button>
-            </form>
-          </div>
+            <PrimaryButton
+              submitFunc={handleSubmit}
+              textDisabled={loginActive ? "Log in" : "Sign Up"}
+              textPrimary={loginActive ? "Log in" : "Sign Up"}
+              loadingText={loginActive ? "Logging in" : "Signing Up"}
+              disabled={false}
+              loading={isLoading}
+            />
+          </form>
         </div>
       </div>
     </div>

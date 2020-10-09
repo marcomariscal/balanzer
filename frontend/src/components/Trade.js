@@ -3,7 +3,7 @@ import TradeWidget from "./TradeWidget";
 
 const Trade = () => {
   return (
-    <div className="text-center justify-content-center">
+    <div className="Trade pt-5 text-center justify-content-center">
       <TradeWidget />
     </div>
   );

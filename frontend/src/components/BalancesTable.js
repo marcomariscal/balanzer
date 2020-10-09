@@ -29,16 +29,16 @@ const BalancesTable = () => {
   };
 
   return (
-    <div className="BalancesTable text-center justify-content-center align-items-center">
+    <div className="BalancesTable">
       <Toggle
         handleToggle={handleToggleUSD}
         initialValue={usdValueSelected}
-        textPrimary="USD"
-        textSecondary="Native"
-      />
+        textPrimary={`Toggle Native`}
+        textSecondary={`Toggle USD`}
+      ></Toggle>
       <Table>
         <thead>
-          <tr>
+          <tr className="thead-tr">
             <th>Symbol</th>
             <th>Value</th>
           </tr>

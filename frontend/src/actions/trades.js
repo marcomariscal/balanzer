@@ -1,5 +1,4 @@
 import {
-  SUBMIT_TRADE_SUCCESS,
   FETCH_TRADES,
   TRADE_SELECT_INPUT,
   TRADE_SELECT_OUTPUT,
@@ -8,22 +7,44 @@ import {
   TRADE_SELECT_INPUT_VALUE,
   TRADE_SELECT_OUTPUT_VALUE,
   UPDATE_MODAL_TYPE,
+  UPDATE_LATEST_TRADE,
+  SUBMIT_TRADE_START,
+  SUBMIT_TRADE_END,
 } from "./types";
 import BackendAPI from "../components/BackendAPI";
-import { startLoad, stopLoad } from "./general";
+import { showErrors, startLoad, stopLoad } from "./general";
 
-export function submitTradeInAPI(data) {
+export function submitTradeInAPI(username, accountId, data) {
   return async function (dispatch) {
-    dispatch(startLoad());
-    // const response = await BackendAPI.createTrade(data);
-    dispatch(submitTradeSuccess());
-    return dispatch(stopLoad());
+    dispatch(submittingTrade());
+    try {
+      const res = await BackendAPI.createTrade(username, accountId, data);
+
+      dispatch(updateLatestTrade(res));
+      return dispatch(endTradeSubmit());
+    } catch (err) {
+      dispatch(showErrors(err));
+      dispatch(endTradeSubmit());
+    }
   };
 }
 
-function submitTradeSuccess() {
+function submittingTrade() {
   return {
-    type: SUBMIT_TRADE_SUCCESS,
+    type: SUBMIT_TRADE_START,
+  };
+}
+
+function endTradeSubmit() {
+  return {
+    type: SUBMIT_TRADE_END,
+  };
+}
+
+function updateLatestTrade(trade) {
+  return {
+    type: UPDATE_LATEST_TRADE,
+    trade,
   };
 }
 

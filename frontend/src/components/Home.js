@@ -1,22 +1,20 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import "./Home.css";
 import { useSelector } from "react-redux";
+import "./Home.scss";
 
 function Home() {
   const { user } = useSelector((st) => st.currentUser);
 
   return (
     <div className="Home">
-      <div className="container text-center">
-        <h1 className="mb-4 font-weight-bold">CFinance</h1>
+      <div className="container text-center justify-content-center">
         <p className="lead">Cryptocurrency Investing Made Easy</p>
-        {user ? (
-          <h2>Welcome Back {user.username}!</h2>
-        ) : (
-          <Link className="btn btn-outline-dark font-weight-bold" to="/login">
+        {user ? null : (
+          <Button as={Link} className="login-button" to="/login">
             Log in
-          </Link>
+          </Button>
         )}
       </div>
     </div>

@@ -30,4 +30,15 @@ router.get("/:exchange/assets", authRequired, async function (req, res, next) {
   }
 });
 
+/** GET /:exchange/tickers => {ticker: [ticker, ...]} */
+
+router.get("/:exchange/tickers", authRequired, async function (req, res, next) {
+  try {
+    const tickers = await client.getTicker(req.params.exchange);
+    return res.json({ tickers });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 module.exports = router;

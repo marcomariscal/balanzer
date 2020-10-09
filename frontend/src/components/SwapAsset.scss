@@ -49,17 +49,17 @@
     opacity: 0.6;
   }
   .max-button {
-    background-color: rgb(66, 248, 188);
-    border: 1px solid rgb(66, 248, 188);
     border-radius: 0.5rem;
     font-size: 0.875rem;
-    font-weight: 500;
     cursor: pointer;
     text-transform: uppercase;
     margin-right: 0.5rem;
-    color: black;
     align-items: center;
     padding: 0.25rem;
+    background: rgba(0, 216, 151, 0.15);
+    color: #00d897;
+    border: none;
+    font-weight: 500;
   }
   .max-button:hover,
   .max-button:focus {
@@ -107,7 +107,8 @@
     }
   }
 
-  .asset-not-selected-button {
+  .asset-not-selected-button,
+  .asset-not-selected-button:focus {
     background-color: #009185;
     color: white !important;
     align-items: center;
@@ -125,6 +126,11 @@
     padding: 0px 0.5rem;
   }
 
+  .asset-not-selected-button {
+    span {
+      margin-left: 0.14rem;
+    }
+  }
   .asset-select-button:hover {
     background-color: rgb(247, 248, 250);
     color: black;

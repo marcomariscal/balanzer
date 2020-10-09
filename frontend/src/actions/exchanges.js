@@ -5,9 +5,14 @@ import { startLoad, stopLoad } from "./general";
 export function getExchangesFromAPI() {
   return async function (dispatch) {
     dispatch(startLoad());
-    const response = await BackendAPI.getExchanges();
-    dispatch(fetchExchanges(response));
-    return dispatch(stopLoad());
+
+    try {
+      const response = await BackendAPI.getExchanges();
+      dispatch(fetchExchanges(response));
+      return dispatch(stopLoad());
+    } catch (error) {
+      dispatch(stopLoad());
+    }
   };
 }
 

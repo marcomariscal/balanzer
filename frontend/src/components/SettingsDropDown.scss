@@ -1,0 +1,79 @@
+.dropdown-menu.show {
+  z-index: 99;
+  color: #002237;
+  box-shadow: 0 2px 8px rgba(0, 34, 55, 0.1);
+  left: inherit;
+  right: 0;
+  background-color: rgb(247, 248, 250);
+  box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px,
+    rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.01) 0px 24px 32px;
+  border-radius: 12px;
+}
+.dropdown-item:active,
+.dropdown-item:focus {
+  background-color: rgb(247, 248, 250) !important;
+}
+
+.setting-span {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.react-switch,
+.delete-button {
+  display: inline-flex;
+  float: inline-end;
+  margin-left: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 34, 55, 0.1);
+}
+
+.SettingsDropDown {
+  label {
+    color: #657795;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+  }
+  .dropdown-item:hover {
+    background-color: rgb(247, 248, 250) !important;
+  }
+
+  .settings-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0.25rem;
+  }
+}
+
+.delete-button-wrapper {
+  margin-top: 1rem;
+}
+
+.delete-button,
+.delete-button:active,
+.delete-button:focus {
+  height: 1rem;
+  margin-top: 0rem !important;
+  background: rgba(245, 141, 141, 0.15) !important;
+  color: #ee4842 !important;
+  border: none !important;
+  font-weight: 500 !important;
+  border-radius: 5px !important;
+  span {
+    font-size: 16px !important;
+  }
+}
+.delete-button:hover {
+  height: 1rem;
+  margin-top: 0rem !important;
+  background: rgba(245, 141, 141, 0.15) !important;
+  color: #ee4842 !important;
+  border: none !important;
+  border-radius: 5px !important;
+  opacity: 0.9 !important;
+  font-weight: 500 !important;
+  span {
+    font-size: 16px !important;
+  }
+}

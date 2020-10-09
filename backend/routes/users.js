@@ -55,6 +55,56 @@ router.post("/", async function (req, res, next) {
   }
 });
 
+/** GET /permissions => {permissions: permissions}
+ * Gets the permissions for the user in the Shrimpy API
+ */
+
+router.get("/:username/permissions", ensureCorrectUser, async function (
+  req,
+  res,
+  next
+) {
+  try {
+    const { username } = req.params;
+    const user = await User.findOne(username);
+    const userId = user.shrimpy_user_id;
+    const keys = await client.getApiKeys(userId);
+    const permissions = await client.getPermissions(userId, keys[0]);
+
+    return res.status(201).json({ permissions });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+/** POST /permissions => {keys: keys}
+ * Generates API keys in the Shrimpy API to be able to trade
+ */
+
+router.post("/:username/permissions", ensureCorrectUser, async function (
+  req,
+  res,
+  next
+) {
+  try {
+    const { username } = req.params;
+    const user = await User.findOne(username);
+    const userId = user.shrimpy_user_id;
+    const keys = await client.getApiKeys(userId);
+    const { account, trade } = req.body;
+
+    // update the permissions in the Shrimpy API
+    const permissions = await client.setPermissions(
+      userId,
+      keys[0],
+      account,
+      trade
+    );
+    return res.status(201).json({ permissions });
+  } catch (err) {
+    return next(err);
+  }
+});
 /** PATCH /[username] {userData} => {user: updatedUser} */
 
 router.patch("/:username", ensureCorrectUser, async function (req, res, next) {

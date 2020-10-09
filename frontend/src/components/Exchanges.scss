@@ -1,4 +1,18 @@
 .Exchanges {
   display: flex;
   flex-direction: row;
+
+  .card-body {
+    color: #657795;
+    font-size: 16px;
+  }
+  .card {
+    border-radius: 5px;
+    font-weight: 400;
+    height: 8rem;
+    min-width: 9rem;
+  }
+  .card:hover {
+    background: #f0f5f9;
+  }
 }

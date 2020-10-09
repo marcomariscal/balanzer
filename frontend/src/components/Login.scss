@@ -1,9 +1,99 @@
 .Login {
+  background-color: white;
+  position: relative;
+  max-width: 420px;
+  width: 100%;
+  background: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px,
+    rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.01) 0px 24px 32px;
+  border-radius: 30px;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+  z-index: 1;
+  border-color: rgb(217, 227, 248);
+  border: 1px solid rgb(247, 248, 250);
+
+  p {
+    display: inline;
+    margin: 0px;
+    min-width: 0px;
+    font-weight: 500;
+    font-size: 14px;
+    color: rgb(86, 90, 105);
+  }
+
   .btn-group {
-    button {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    color: rgb(0, 0, 0);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    .btn {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
       border-bottom: none;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
     }
+  }
+  .bottom-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+  }
+
+  .card {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 0 !important;
+  }
+
+  .card-body {
+    border-color: rgb(217, 227, 248);
+    border: 1px solid rgb(247, 248, 250);
+  }
+
+  label {
+    display: inline;
+    margin: 0px;
+    min-width: 0px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #565a69;
+    float: left;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn,
+  .btn:active,
+  .btn:focus {
+    background: rgba(0, 216, 151, 0.15);
+    color: #00d897;
+    border: none;
+    font-weight: 500;
+    height: 3rem;
+    width: 6rem;
+  }
+  .btn:hover {
+    background: rgba(0, 216, 151, 0.35);
+    color: #02865f;
+  }
+  .btn-login {
+    background: #d9e1e7 !important;
+    border: none !important;
+    color: #657795 !important;
+  }
+  .btn-login:hover {
+    background: #d9e1e7;
+    border: none;
+    color: #657795;
+    opacity: 0.8;
   }
 }

@@ -5,6 +5,7 @@ import assets from "./assets";
 import users from "./users";
 import general from "./general";
 import trades from "./trades";
+import rebalance from "./rebalance";
 
 export default combineReducers({
   currentUser,
@@ -13,4 +14,5 @@ export default combineReducers({
   general,
   assets,
   trades,
+  rebalance,
 });

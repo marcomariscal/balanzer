@@ -16,7 +16,9 @@
   z-index: 1;
   background-color: #009185;
   color: white;
+  font-size: 16px;
   margin-top: 1rem;
+  line-height: initial;
 
   span {
     margin: 0px;
@@ -26,17 +28,35 @@
   }
 }
 
-.PrimaryButton:hover {
+.PrimaryButton:hover,
+.PrimaryButton:focus {
   background-color: #009185;
   opacity: 0.8;
+  outline: none !important;
+  font-size: 16px;
+  line-height: initial;
 }
 
 .PrimaryButton.disabled {
+  cursor: not-allowed;
   color: rgb(136, 141, 155);
   background-color: rgb(237, 238, 242);
-  cursor: auto;
-  box-shadow: none;
-  border: 1px solid transparent;
-  outline: none;
   opacity: 1;
+  padding: 18px;
+  width: 100%;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 12px;
+  outline: none;
+  border: 1px solid transparent;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  line-height: initial;
+  font-size: 16px;
+  margin-top: 1rem;
 }

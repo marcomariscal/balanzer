@@ -1,0 +1,49 @@
+.BalanceChart {
+  margin-left: auto;
+  width: 35rem;
+  height: 20rem;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 10px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  color: rgb(86, 90, 105);
+
+  .period-menu {
+    display: flex;
+    padding: 16px;
+  }
+
+  .period-menu-switcher {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .timeframe-button {
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    margin-left: 8px;
+    border: 0px;
+    outline: 0px;
+    padding: 0px;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    font-weight: 500;
+    color: rgba(120, 124, 138, 0.9);
+  }
+  .timeframe-button:hover {
+    outline: none;
+    font-weight: 500;
+    color: #009185;
+  }
+  .timeframe-button.active {
+    outline: none;
+    font-weight: 500;
+    color: #009185;
+  }
+
+  .recharts-wrapper {
+    margin: auto;
+  }
+}

@@ -1,0 +1,36 @@
+.Automate {
+  .summary {
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    margin: auto;
+    position: relative;
+  }
+
+  .summary-rebalance-period,
+  .summary-rebalance-periodw:focus {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+  }
+
+  .summary-rebalance-period:hover {
+    background-color: white;
+    border-radius: 12px;
+  }
+
+  .edit-icon-wrapper {
+    position: absolute;
+    color: #009185;
+    left: 200px;
+    top: 10px;
+  }
+
+  .bartable-wrapper {
+    margin-top: 2rem;
+  }
+}

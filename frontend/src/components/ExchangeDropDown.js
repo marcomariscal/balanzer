@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { NavDropdown } from "react-bootstrap";
+import { NavDropdown, Image } from "react-bootstrap";
 import { updateCurrentAccountInState } from "../actions/currentUser";
 
 const ExchangeDropDown = () => {
@@ -25,6 +25,7 @@ const ExchangeDropDown = () => {
           className="text-center"
           value={a.exchange}
         >
+          <Image className="mx-2" src={a.icon} alt={a.exchange} />
           {a.exchange}
         </NavDropdown.Item>
       ))
