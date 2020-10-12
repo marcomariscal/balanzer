@@ -1,20 +1,50 @@
-# cfinance-2.0
+# Balanzer
 
 # Purpose
 
-Cfinance 2.0 is the second iteration/revamp of the cFinance tool, which allows you to capture gains on your cryptocurrency portfolio investments by rebalancing. Cfinance 2.0 aims to do the same, but with the following additional functionalitites:
+Balanzer allows you to capture gains on your cryptocurrency portfolio investments by rebalancing seamlessly and automatically at your desired rebalancing timeframe. Balanzer offers the following functionalitites:
 
     1. Seamless integration with multiple exchanges if you have multiple exchange accounts
-    2. Backtesting functionality to assess whether your idea for a crypto porftolio has generated alpha in the past
-    3. Automated rebalancing across timeframes (day, week, month, etc.)
-    4. Simple intra-exchange trading functionality
-    5. Fundamental and technical analysis dashboard
+    2. Automated rebalancing across timeframes (hour, day, week, month, etc.)
+    3. Intra-exchange trading
+    4. Fundamental and technical analysis dashboard (coming soon)
+    5. Backtesting functionality to assess whether your idea for a crypto porftolio has generated alpha in the past (coming soon)
 
 # Tools
 
-Whereas cFinance used Flask and pSQL, Cfinance 2.0 will use the following tools/frameworks:
+Balanzer uses the following tools/frameworks:
 
     - React
     - Node
+    - Express
     - Redux
-    - postreSQL
+    - postgreSQL
+    - Bootstrap
+
+# Getting Started
+
+`git clone` this repository
+
+Using the frontend:
+
+`cd frontend` from the root of this directory  
+`npm install`  
+`npm start`
+
+The frontend will be available at 'http://localhost:3000/'
+
+Using the backend:
+
+`cd backend` from the root of this directory  
+`npm install`  
+`npm start`
+
+The backend will be available at 'http://localhost:3001/'
+
+However, to be able to actually use the backend, you will need to have a Shrimpy API master or user developer key.
+The Shrimpy public and private API keys will then need to be set as environment variables:
+
+`SHRIMPY_MASTER_API_PUBLIC_KEY = "your master or user public api key"`
+`SHRIMPY_MASTER_API_PRIVATE_KEY = "your master or user private api key"`
+
+Shrimpy API key documentation and more information can be found here: 'https://developers.shrimpy.io/docs/'
