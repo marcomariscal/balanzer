@@ -44,7 +44,7 @@ The backend will be available at 'http://localhost:3001/'
 However, to be able to actually use the backend, you will need to have a Shrimpy API master or user developer key.
 The Shrimpy public and private API keys will then need to be set as environment variables:
 
-`SHRIMPY_MASTER_API_PUBLIC_KEY = "your master or user public api key"`
+`SHRIMPY_MASTER_API_PUBLIC_KEY = "your master or user public api key"`  
 `SHRIMPY_MASTER_API_PRIVATE_KEY = "your master or user private api key"`
 
 Shrimpy API key documentation and more information can be found here: 'https://developers.shrimpy.io/docs/'
