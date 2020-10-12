@@ -19,9 +19,9 @@ const SHRIMPY_PRIVATE_KEY = process.env.SHRIMPY_MASTER_API_PRIVATE_KEY;
 let DB_URI;
 
 if (process.env.NODE_ENV === "test") {
-  DB_URI = "cfinance2-test";
+  DB_URI = "balanzer-test";
 } else {
-  DB_URI = process.env.DATABASE_URL || "cfinance2";
+  DB_URI = process.env.DATABASE_URL || "balanzer";
 }
 
 module.exports = {
