@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { NavDropdown } from "react-bootstrap";
 import {
   updatePermissionsInAPI,
   deleteAccountInAPI,
+  getPermissionsFromAPI,
 } from "../actions/currentUser";
 import Spinner from "./Spinner";
 import "./SettingsDropDown.scss";
@@ -48,6 +49,14 @@ const SettingsDropDown = () => {
     history.push("/dashboard");
     setDeletingAccount(false);
   };
+
+  useEffect(() => {
+    async function getPermissions() {
+      dispatch(getPermissionsFromAPI(user.username));
+    }
+
+    getPermissions();
+  }, []);
 
   if (!permissions) return null;
 

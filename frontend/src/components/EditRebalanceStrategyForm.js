@@ -20,10 +20,8 @@ const EditRebalanceStrategyForm = ({
   submitStrategy,
 }) => {
   const dispatch = useDispatch();
-  const {
-    showRebalanceAssetSelectModal,
-    editingRebalanceStrategy,
-  } = useSelector((st) => st.rebalance);
+  const { showRebalanceAssetSelectModal } = useSelector((st) => st.rebalance);
+  const { loading } = useSelector((st) => st.general);
 
   // handle invalid form in state
   const [isInvalidForm, setIsInvalidForm] = useState(true);
@@ -54,6 +52,10 @@ const EditRebalanceStrategyForm = ({
   };
 
   const handleCloseModal = () => dispatch(closeRebalanceAssetSelectModal());
+
+  const addAsset = (e) => {
+    handleAddAsset(e.target.value);
+  };
 
   return (
     <div className="barchart-wrapper">
@@ -91,7 +93,7 @@ const EditRebalanceStrategyForm = ({
         <AssetPickerModal
           showModal={showRebalanceAssetSelectModal}
           closeModal={handleCloseModal}
-          handleAssetSelect={handleAddAsset}
+          handleAssetSelect={addAsset}
         />
         <PrimaryButton
           submitFunc={submitStrategy}
@@ -99,7 +101,7 @@ const EditRebalanceStrategyForm = ({
           textPrimary="Edit Strategy"
           loadingText="Editing Strategy"
           disabled={isInvalidForm}
-          loading={editingRebalanceStrategy}
+          loading={loading}
         />
       </form>
     </div>

@@ -55,11 +55,6 @@
     border: 0 !important;
   }
 
-  .card-body {
-    border-color: rgb(217, 227, 248);
-    border: 1px solid rgb(247, 248, 250);
-  }
-
   label {
     display: inline;
     margin: 0px;
@@ -86,14 +81,24 @@
     color: #02865f;
   }
   .btn-login {
-    background: #d9e1e7 !important;
+    background: rgba(255, 0, 122, 0.5) !important;
     border: none !important;
-    color: #657795 !important;
+    color: white !important;
   }
   .btn-login:hover {
-    background: #d9e1e7;
-    border: none;
-    color: #657795;
-    opacity: 0.8;
+    background: rgba(255, 0, 122, 0.35) !important;
+    border: none !important;
+    color: white !important;
   }
+}
+
+.login-button {
+  background: rgba(0, 216, 151, 0.15) !important;
+  color: #00d897 !important;
+  width: 6rem !important;
+}
+.login-button:hover {
+  background: rgba(0, 216, 151, 0.35) !important;
+  color: #00d897 !important;
+  width: 6rem !important;
 }

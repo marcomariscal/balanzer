@@ -22,8 +22,8 @@ router.get("/:username", ensureCorrectUser, async function (req, res, next) {
   }
 });
 
-/** GET /[username]/[accountId]/balances => {balance: balance}
- * returns the balance of each asset in the user's account
+/** GET /[username]/[accountId] => {balance: balance}
+ * returns the account
  */
 
 router.get("/:username/:accountId", ensureCorrectUser, async function (
@@ -76,9 +76,23 @@ router.get("/:username/:accountId/balances", ensureCorrectUser, async function (
     // match the rebalance strategy with available balances
     for (const bal of balances) {
       if (rebalMap.has(bal.symbol)) {
-        bal.allocationPct = balMap.get(bal.symbol);
+        bal.allocationPct = rebalMap.get(bal.symbol);
       } else {
         bal.allocationPct = 0;
+      }
+    }
+
+    for (const [key, val] of rebalMap) {
+      const isStrategyAsset = balances.some((bal) => bal.symbol === key);
+
+      if (!isStrategyAsset) {
+        balances.push({
+          symbol: key,
+          btcValue: 0,
+          nativeValue: 0,
+          usdValue: 0,
+          allocationPct: val,
+        });
       }
     }
 

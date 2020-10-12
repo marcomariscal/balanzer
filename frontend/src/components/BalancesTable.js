@@ -37,12 +37,6 @@ const BalancesTable = () => {
         textSecondary={`Toggle USD`}
       ></Toggle>
       <Table>
-        <thead>
-          <tr className="thead-tr">
-            <th>Symbol</th>
-            <th>Value</th>
-          </tr>
-        </thead>
         <tbody>{tableRender}</tbody>
       </Table>
     </div>

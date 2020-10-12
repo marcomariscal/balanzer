@@ -69,7 +69,7 @@ const Navigation = ({ logout }) => {
     <div className="Navigation">
       <Navbar>
         <Navbar.Brand as={Link} to="/">
-          CFinance
+          Balanzer
         </Navbar.Brand>
         {user ? loggedInRender : loggedOutRender}
       </Navbar>

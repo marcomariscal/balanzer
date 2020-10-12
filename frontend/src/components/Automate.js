@@ -5,6 +5,7 @@ import {
   getRebalanceStrategyFromAPI,
   setRebalancePeriodInAPI,
   setRebalanceStrategyInAPI,
+  syncUserData,
 } from "../actions/currentUser";
 import { rebalancePeriodTimeframes } from "../helpers/timeframes";
 import {
@@ -44,7 +45,6 @@ const Automate = () => {
       { symbol, allocationPct: 0, actualPctOfTotal: 0 },
     ]);
     dispatch(closeRebalanceAssetSelectModal());
-    console.log(rebalanceStrategyForm);
   };
 
   useEffect(() => {
@@ -77,22 +77,23 @@ const Automate = () => {
     setIsEditingStrategy((edit) => !edit);
   };
 
-  const hanldeSubmitStrategy = (e) => {
+  const handleSubmitStrategy = (e) => {
     e.preventDefault();
 
     // we only need the symbol and allocation target percentage to update the rebalance strategy
     let allocations = rebalanceStrategyForm.map(
       ({ symbol, allocationPct }) => ({
         symbol,
-        allocationPct: allocationPct.toString(),
+        percent: allocationPct.toString(),
       })
     );
 
-    allocations = allocations.filter((bal) => bal.allocationPct !== "0");
+    allocations = allocations.filter((bal) => bal.percent !== "0");
 
     dispatch(
       setRebalanceStrategyInAPI(user.username, currentAccount.id, allocations)
     );
+    dispatch(syncUserData(user.username, currentAccount.id));
   };
 
   const rebalancePeriodText =
@@ -137,17 +138,15 @@ const Automate = () => {
       <div className="bartable-wrapper">
         {isEditingStrategy ? (
           <EditRebalanceStrategyForm
-            balances={balances}
             rebalanceStrategyForm={rebalanceStrategyForm}
             cancelEdit={handleEditRebalanceStrategy}
             handleAddAsset={handleAddAssetToStrategy}
             rebalanceStrategy={rebalanceStrategy}
             setRebalanceStrategy={setRebalanceStrategyForm}
-            submitStrategy={hanldeSubmitStrategy}
+            submitStrategy={handleSubmitStrategy}
           />
         ) : (
           <BarTable
-            balances={balances}
             handleEdit={handleEditRebalanceStrategy}
             rebalanceStrategyForm={rebalanceStrategyForm}
             handleAddAsset={handleAddAssetToStrategy}

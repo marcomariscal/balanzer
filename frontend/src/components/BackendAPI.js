@@ -184,7 +184,7 @@ class BackendAPI {
   static async setRebalanceStrategy(username, accountId, allocations) {
     let res = await this.request(
       `userAccounts/${username}/${accountId}/rebalanceStrategy`,
-      { isDynamic: false, allocations },
+      { rebalanceStrategy: { isDynamic: false, allocations } },
       "post"
     );
     return res.rebalanceStrategy;

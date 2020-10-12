@@ -73,7 +73,7 @@ export default function rootReducer(state = INITIAL_STATE, action) {
     case FETCH_PERMISSIONS:
       return { ...state, permissions: action.permissions };
     case PERMISSIONS_UPDATED:
-      return { ...state, permissionsUpdated: true };
+      return { ...state, permissions: action.permissions };
     case LOGOUT_CURRENT_USER:
       return INITIAL_STATE;
     case AUTH_SUCCESS:

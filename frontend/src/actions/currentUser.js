@@ -310,14 +310,15 @@ function fetchPermissions(permissions) {
 
 export function updatePermissionsInAPI(username, data) {
   return async function (dispatch) {
-    await BackendAPI.updatePermissions(username, data);
-    return dispatch(updatePermissions());
+    const response = await BackendAPI.updatePermissions(username, data);
+    return dispatch(updatePermissions(response));
   };
 }
 
-function updatePermissions() {
+function updatePermissions(permissions) {
   return {
     type: PERMISSIONS_UPDATED,
+    permissions,
   };
 }
 

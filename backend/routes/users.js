@@ -94,12 +94,10 @@ router.post("/:username/permissions", ensureCorrectUser, async function (
     const { account, trade } = req.body;
 
     // update the permissions in the Shrimpy API
-    const permissions = await client.setPermissions(
-      userId,
-      keys[0],
-      account,
-      trade
-    );
+    await client.setPermissions(userId, keys[0], account, trade);
+
+    const permissions = await client.getPermissions(userId, keys[0]);
+
     return res.status(201).json({ permissions });
   } catch (err) {
     return next(err);
