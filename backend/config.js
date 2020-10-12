@@ -13,8 +13,8 @@ const SHRIMPY_PRIVATE_KEY = process.env.SHRIMPY_MASTER_API_PRIVATE_KEY;
 // database is:
 //
 // - on Heroku, get from env var DATABASE_URL
-// - in testing, 'cfinance2-test'
-// - else: 'cfinance2'
+// - in testing, 'balanzer-test'
+// - else: 'balanzer'
 
 let DB_URI;
 
