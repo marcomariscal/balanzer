@@ -3,7 +3,7 @@
 const User = require("../models/user");
 const express = require("express");
 const router = new express.Router();
-const ExpressError = require("../helpers/ExpressError");
+const ExpressError = require("../helpers/expressError");
 const createToken = require("../helpers/createToken");
 const { validate } = require("jsonschema");
 const { userAuthSchema } = require("../schemas");
