@@ -1,7 +1,7 @@
 const db = require("../db");
 const bcrypt = require("bcrypt");
 const partialUpdate = require("../helpers/partialUpdate");
-const ExpressError = require("../helpers/ExpressError");
+const ExpressError = require("../helpers/expressError");
 const client = require("../helpers/shrimpy");
 
 const BCRYPT_WORK_FACTOR = 10;
