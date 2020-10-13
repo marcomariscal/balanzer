@@ -1,8 +1,6 @@
 /** Routes for supported exchanges in the Shrimpy API. */
 
 const express = require("express");
-const ExpressError = require("../helpers/ExpressError");
-const createToken = require("../helpers/createToken");
 const client = require("../helpers/shrimpy");
 const { authRequired } = require("../middleware/auth");
 

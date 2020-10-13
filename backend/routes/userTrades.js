@@ -1,10 +1,7 @@
 /** Routes for trading. */
 
 const express = require("express");
-const ExpressError = require("../helpers/ExpressError");
 const { ensureCorrectUser } = require("../middleware/auth");
-const User = require("../models/User");
-const { validate } = require("jsonschema");
 const client = require("../helpers/shrimpy");
 const delay = require("../helpers/delay");
 const Decimal = require("decimal.js");

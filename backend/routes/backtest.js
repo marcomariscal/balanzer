@@ -2,11 +2,7 @@
 
 const express = require("express");
 const Decimal = require("decimal.js");
-const ExpressError = require("../helpers/ExpressError");
-const createToken = require("../helpers/createToken");
 const client = require("../helpers/shrimpy");
-const { authRequired } = require("../middleware/auth");
-const { end } = require("../db");
 
 const router = express.Router();
 

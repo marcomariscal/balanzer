@@ -1,12 +1,10 @@
 /** Routes for a user's accounts in the Shrimpy API. */
 
 const express = require("express");
-const ExpressError = require("../helpers/ExpressError");
 const { ensureCorrectUser } = require("../middleware/auth");
-const User = require("../models/User");
+const User = require("../models/user");
 const client = require("../helpers/shrimpy");
 const dayjs = require("dayjs");
-const delay = require("../helpers/delay");
 
 const router = express.Router();
 

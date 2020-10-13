@@ -1,9 +1,9 @@
 /** Routes for users. */
 
 const express = require("express");
-const ExpressError = require("../helpers/ExpressError");
-const { ensureCorrectUser, authRequired } = require("../middleware/auth");
-const User = require("../models/User");
+const ExpressError = require("../helpers/expressError");
+const { ensureCorrectUser } = require("../middleware/auth");
+const User = require("../models/user");
 const { validate } = require("jsonschema");
 const { userNewSchema, userUpdateSchema } = require("../schemas");
 const createToken = require("../helpers/createToken");
