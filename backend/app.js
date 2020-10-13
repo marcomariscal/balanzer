@@ -2,7 +2,7 @@
 
 const express = require("express");
 
-const ExpressError = require("./helpers/ExpressError");
+const ExpressError = require("./helpers/expressError");
 
 const authRoutes = require("./routes/auth");
 const backtestRoutes = require("./routes/backtest");
