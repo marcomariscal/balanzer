@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import _ from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getRebalancePeriodFromAPI,
@@ -6,6 +7,7 @@ import {
   setRebalancePeriodInAPI,
   setRebalanceStrategyInAPI,
   syncUserData,
+  rebalanceInAPI,
 } from "../actions/currentUser";
 import { rebalancePeriodTimeframes } from "../helpers/timeframes";
 import {
@@ -19,7 +21,7 @@ import Summary from "./Summary";
 import BarTable from "./BarTable";
 import "./Automate.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faChartPie } from "@fortawesome/free-solid-svg-icons";
 
 const Automate = () => {
   const dispatch = useDispatch();
@@ -40,10 +42,15 @@ const Automate = () => {
   const [rebalanceStrategyForm, setRebalanceStrategyForm] = useState(balances);
 
   const handleAddAssetToStrategy = (symbol) => {
-    setRebalanceStrategyForm((strat) => [
-      ...strat,
-      { symbol, allocationPct: 0, actualPctOfTotal: 0 },
-    ]);
+    console.log(symbol);
+    const hasSymbol = _.some(rebalanceStrategyForm, ["symbol", symbol]);
+
+    if (!hasSymbol) {
+      setRebalanceStrategyForm((strat) => [
+        ...strat,
+        { symbol, allocationPct: 0, actualPctOfTotal: 0 },
+      ]);
+    }
     dispatch(closeRebalanceAssetSelectModal());
   };
 
@@ -96,6 +103,12 @@ const Automate = () => {
     dispatch(syncUserData(user.username, currentAccount.id));
   };
 
+  const handleRebalanceNow = (e) => {
+    e.preventDefault();
+
+    dispatch(rebalanceInAPI(user.username, currentAccount.id));
+  };
+
   const rebalancePeriodText =
     rebalancePeriod === 0
       ? "None"
@@ -115,10 +128,10 @@ const Automate = () => {
     <div className="Automate container text-center">
       <div className="summary">
         <button
-          className="summary-rebalance-period"
+          className="automate-view-button"
           onClick={handleShowPeriodSelectModal}
         >
-          <div className="edit-icon-wrapper">
+          <div className="icon-wrapper">
             <FontAwesomeIcon icon={faEdit} className="edit-icon" />
           </div>
           <Summary
@@ -127,6 +140,14 @@ const Automate = () => {
             loading={loading}
           />
         </button>
+        {rebalanceStrategy && !isEditingStrategy && (
+          <button className="automate-view-button" onClick={handleRebalanceNow}>
+            <div className="pie-icon">
+              <FontAwesomeIcon icon={faChartPie} className="pie-icon" />
+            </div>
+            <Summary title={"Rebalance Now"} loading={loading} />
+          </button>
+        )}
         <Summary title={totalBalanceUSD} subTitle={"Portfolio Balance"} />
       </div>
 

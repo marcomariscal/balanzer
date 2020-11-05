@@ -15,7 +15,7 @@ const EditBarTableItem = ({
 }) => {
   const [data, setData] = useState({
     name,
-    value: targetAllocation,
+    value: Number(targetAllocation),
   });
 
   const onChange = (value) => {
