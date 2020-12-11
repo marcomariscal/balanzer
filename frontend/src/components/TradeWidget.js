@@ -4,6 +4,7 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import { getExchangeRateValue } from "../helpers/exchangeRates";
 import PrimaryButton from "./PrimaryButton";
 import SwapAsset from "./SwapAsset";
+import Spinner from "./Spinner";
 import Alert from "./Alert";
 import { submitTradeInAPI, closeModal } from "../actions/trades";
 import { getTokenBalance } from "../helpers/balanceHelpers";
@@ -15,6 +16,8 @@ const TradeWidget = () => {
   const dispatch = useDispatch();
   const { balances } = useSelector((st) => st.currentUser);
   const { submittingTrade } = useSelector((st) => st.trades);
+  const { loading } = useSelector((st) => st.general);
+
   const currentUser = useSelector((st) => st.currentUser, shallowEqual);
 
   const [tradeDetails, setTradeDetails] = useState({
@@ -124,15 +127,20 @@ const TradeWidget = () => {
     getOutputValue();
   }, [input.asset, input.value, currentUser, isInvalidForm, output.asset]);
 
-  if (!balances.length) {
+  if (!balances.length && !loading) {
     return (
       <div className="container text-center">
-        <h2>Please connect to an account</h2>
+        <h2>
+          Please deposit funds into your {currentUser.currentAccount.exchange}{" "}
+          account
+        </h2>
       </div>
     );
   }
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <div className="TradeWidget">
       <form autoComplete="off">
         <SwapAsset

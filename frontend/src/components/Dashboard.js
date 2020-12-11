@@ -14,8 +14,18 @@ const Dashboard = () => {
 
   if (!currentAccount) {
     return (
-      <div className="Dashboard container text-center">
+      <div className="Dashboard container text-center pt-5">
         <h2>Please connect to an account</h2>
+      </div>
+    );
+  }
+
+  if (!balances.length && !loading) {
+    return (
+      <div className="Dashboard container text-center pt-5">
+        <h2>
+          Please deposit funds into your {currentAccount.exchange} account
+        </h2>
       </div>
     );
   }

@@ -264,6 +264,13 @@ export function syncUserData(username, accountId = null) {
       // update asset info
       dispatch(getExchangeAssetsFromAPI(currAccount.exchange));
 
+      dispatch(getRebalancePeriodFromAPI(user.username, accountIdToUse));
+
+      dispatch(getRebalanceStrategyFromAPI(user.username, accountIdToUse));
+
+      // update balance history
+      dispatch(getBalanceHistoryFromAPI(user.username, accountIdToUse, "All"));
+
       dispatch(userDataUpdated());
       return dispatch(stopLoad());
     } catch (error) {

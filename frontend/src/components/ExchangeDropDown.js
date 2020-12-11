@@ -15,6 +15,8 @@ const ExchangeDropDown = () => {
     (st) => st.currentUser
   );
 
+  const { loading } = useSelector((st) => st.general);
+
   const updateCurrentAccount = (e) => {
     const accountId = e;
     const updatedAccount = accounts.filter((a) => a.id === accountId);
@@ -51,7 +53,7 @@ const ExchangeDropDown = () => {
 
   const render = (
     <div className="ExchangeDropDown">
-      {currentAccount ? (
+      {currentAccount.exchange ? (
         <NavDropdown
           title={currentAccount.exchange}
           id="collasible-nav-dropdown"
@@ -72,7 +74,7 @@ const ExchangeDropDown = () => {
     </div>
   );
 
-  return render;
+  return loading ? null : render;
 };
 
 export default ExchangeDropDown;

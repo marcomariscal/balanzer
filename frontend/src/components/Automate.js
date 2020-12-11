@@ -43,7 +43,6 @@ const Automate = () => {
   const [rebalanceStrategyForm, setRebalanceStrategyForm] = useState(balances);
 
   const handleAddAssetToStrategy = (symbol) => {
-    console.log(symbol);
     const hasSymbol = _.some(rebalanceStrategyForm, ["symbol", symbol]);
 
     if (!hasSymbol) {
@@ -119,8 +118,18 @@ const Automate = () => {
 
   if (!currentAccount) {
     return (
-      <div className="Dashboard container text-center">
+      <div className="Dashboard container text-center pt-5">
         <h2>Please connect to an account</h2>
+      </div>
+    );
+  }
+
+  if (!balances.length && !loading) {
+    return (
+      <div className="Dashboard container text-center pt-5">
+        <h2>
+          Please deposit funds into your {currentAccount.exchange} account
+        </h2>
       </div>
     );
   }
@@ -145,7 +154,9 @@ const Automate = () => {
                 loading={loading}
               />
             </button>
-            {rebalanceStrategy && !isEditingStrategy && (
+            {balances.length &&
+            rebalanceStrategy.allocations.length &&
+            !isEditingStrategy ? (
               <button
                 className="automate-view-button"
                 onClick={handleRebalanceNow}
@@ -155,7 +166,7 @@ const Automate = () => {
                 </div>
                 <Summary title={"Rebalance Now"} loading={loading} />
               </button>
-            )}
+            ) : null}
             <Summary title={totalBalanceUSD} subTitle={"Portfolio Balance"} />
           </div>
 
