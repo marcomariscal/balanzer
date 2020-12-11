@@ -51,7 +51,7 @@ const ExchangeDropDown = () => {
 
   const render = (
     <div className="ExchangeDropDown">
-      {currentAccount.exchange ? (
+      {currentAccount ? (
         <NavDropdown
           title={currentAccount.exchange}
           id="collasible-nav-dropdown"
