@@ -5,6 +5,7 @@ const { ensureCorrectUser } = require("../middleware/auth");
 const User = require("../models/user");
 const client = require("../helpers/shrimpy");
 const dayjs = require("dayjs");
+const computeBalanceHistory = require("../helpers/balanceHistoryHelpers");
 
 const router = express.Router();
 
@@ -169,7 +170,13 @@ router.get(
         });
       }
 
-      return res.json({ balanceHistory });
+      const computedBalanceHistory = computeBalanceHistory(
+        balanceHistory,
+        timeframe
+      );
+      console.log(computedBalanceHistory);
+
+      return res.json({ balanceHistory: computedBalanceHistory });
     } catch (err) {
       return next(err);
     }
