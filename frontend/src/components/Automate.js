@@ -22,6 +22,7 @@ import BarTable from "./BarTable";
 import "./Automate.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faChartPie } from "@fortawesome/free-solid-svg-icons";
+import Spinner from "./Spinner";
 
 const Automate = () => {
   const dispatch = useDispatch();
@@ -126,54 +127,63 @@ const Automate = () => {
 
   return (
     <div className="Automate container text-center">
-      <div className="summary">
-        <button
-          className="automate-view-button"
-          onClick={handleShowPeriodSelectModal}
-        >
-          <div className="icon-wrapper">
-            <FontAwesomeIcon icon={faEdit} className="edit-icon" />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className="summary">
+            <button
+              className="automate-view-button"
+              onClick={handleShowPeriodSelectModal}
+            >
+              <div className="icon-wrapper">
+                <FontAwesomeIcon icon={faEdit} className="edit-icon" />
+              </div>
+              <Summary
+                title={rebalancePeriodText}
+                subTitle={"Current Rebalance Period"}
+                loading={loading}
+              />
+            </button>
+            {rebalanceStrategy && !isEditingStrategy && (
+              <button
+                className="automate-view-button"
+                onClick={handleRebalanceNow}
+              >
+                <div className="pie-icon">
+                  <FontAwesomeIcon icon={faChartPie} className="pie-icon" />
+                </div>
+                <Summary title={"Rebalance Now"} loading={loading} />
+              </button>
+            )}
+            <Summary title={totalBalanceUSD} subTitle={"Portfolio Balance"} />
           </div>
-          <Summary
-            title={rebalancePeriodText}
-            subTitle={"Current Rebalance Period"}
-            loading={loading}
-          />
-        </button>
-        {rebalanceStrategy && !isEditingStrategy && (
-          <button className="automate-view-button" onClick={handleRebalanceNow}>
-            <div className="pie-icon">
-              <FontAwesomeIcon icon={faChartPie} className="pie-icon" />
-            </div>
-            <Summary title={"Rebalance Now"} loading={loading} />
-          </button>
-        )}
-        <Summary title={totalBalanceUSD} subTitle={"Portfolio Balance"} />
-      </div>
 
-      <RebalancePeriodSelectModal
-        showModal={showRebalancePeriodModal}
-        closeModal={handleClosePeriodSelectModal}
-        handleSubmit={handleRebalancePeriodChange}
-      />
-      <div className="bartable-wrapper">
-        {isEditingStrategy ? (
-          <EditRebalanceStrategyForm
-            rebalanceStrategyForm={rebalanceStrategyForm}
-            cancelEdit={handleEditRebalanceStrategy}
-            handleAddAsset={handleAddAssetToStrategy}
-            rebalanceStrategy={rebalanceStrategy}
-            setRebalanceStrategy={setRebalanceStrategyForm}
-            submitStrategy={handleSubmitStrategy}
+          <RebalancePeriodSelectModal
+            showModal={showRebalancePeriodModal}
+            closeModal={handleClosePeriodSelectModal}
+            handleSubmit={handleRebalancePeriodChange}
           />
-        ) : (
-          <BarTable
-            handleEdit={handleEditRebalanceStrategy}
-            rebalanceStrategyForm={rebalanceStrategyForm}
-            handleAddAsset={handleAddAssetToStrategy}
-          />
-        )}
-      </div>
+          <div className="bartable-wrapper">
+            {isEditingStrategy ? (
+              <EditRebalanceStrategyForm
+                rebalanceStrategyForm={rebalanceStrategyForm}
+                cancelEdit={handleEditRebalanceStrategy}
+                handleAddAsset={handleAddAssetToStrategy}
+                rebalanceStrategy={rebalanceStrategy}
+                setRebalanceStrategy={setRebalanceStrategyForm}
+                submitStrategy={handleSubmitStrategy}
+              />
+            ) : (
+              <BarTable
+                handleEdit={handleEditRebalanceStrategy}
+                rebalanceStrategyForm={rebalanceStrategyForm}
+                handleAddAsset={handleAddAssetToStrategy}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

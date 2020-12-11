@@ -174,7 +174,6 @@ router.get(
         balanceHistory,
         timeframe
       );
-      console.log(computedBalanceHistory);
 
       return res.json({ balanceHistory: computedBalanceHistory });
     } catch (err) {
