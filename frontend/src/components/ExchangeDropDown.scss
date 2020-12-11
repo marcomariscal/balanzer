@@ -1,0 +1,13 @@
+.ExchangeDropDown {
+  .dropdown-item {
+    height: auto;
+    display: flex;
+    align-items: center;
+  }
+  .dropdown-item:hover {
+    background-color: rgba(152, 247, 188, 0.1);
+  }
+  .exchange-img {
+    margin: auto;
+  }
+}

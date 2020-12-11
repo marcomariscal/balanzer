@@ -7,7 +7,7 @@ import Spinner from "./Spinner";
 import "./Dashboard.scss";
 
 const Dashboard = () => {
-  const { currentAccount, totalBalanceUSD } = useSelector(
+  const { currentAccount, totalBalanceUSD, balances } = useSelector(
     (st) => st.currentUser
   );
   const { loading } = useSelector((st) => st.general);
@@ -27,9 +27,14 @@ const Dashboard = () => {
       ) : (
         <>
           <Summary title={totalBalanceUSD} subTitle={"Portfolio Balance"} />
-          <div className="balances-table-wrapper">
-            <BalancesTable />
-            <BalanceChart />
+
+          <div className="balances-table-wrapper mt-3">
+            {balances.length ? (
+              <>
+                <BalancesTable />
+                <BalanceChart />
+              </>
+            ) : null}
           </div>
         </>
       )}
