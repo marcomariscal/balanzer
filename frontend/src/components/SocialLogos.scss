@@ -1,0 +1,15 @@
+.SocialLogos {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+
+  span {
+    a {
+      color: #009185;
+    }
+
+    a:hover {
+      opacity: 0.8;
+    }
+  }
+}
