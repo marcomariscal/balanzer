@@ -25,7 +25,6 @@ import { totalBalanceUSD } from "../helpers/balanceHelpers";
 
 const INITIAL_STATE = {
   accounts: [],
-  notCurrentAccounts: [],
   currentAccount: null,
   user: null,
   permissions: null,
@@ -59,7 +58,10 @@ export default function rootReducer(state = INITIAL_STATE, action) {
     case FETCH_BALANCE_HISTORY:
       return { ...state, balanceHistory: action.balanceHistory };
     case UPDATE_CURRENT_ACCOUNT:
-      return { ...state, ...state.user, currentAccount: action.account };
+      return {
+        ...state,
+        currentAccount: action.account,
+      };
     case START_CREATE_ACCOUNT:
       return { ...state, creatingAccount: true };
     case END_CREATE_ACCOUNT:
