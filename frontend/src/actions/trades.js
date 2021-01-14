@@ -12,7 +12,7 @@ import {
   SUBMIT_TRADE_END,
 } from "./types";
 import BackendAPI from "../components/BackendAPI";
-import { showErrors, startLoad, stopLoad } from "./general";
+import { showErrors, startLoad, stopLoad, showMessage } from "./general";
 
 export function submitTradeInAPI(username, accountId, data) {
   return async function (dispatch) {
@@ -21,6 +21,7 @@ export function submitTradeInAPI(username, accountId, data) {
       const res = await BackendAPI.createTrade(username, accountId, data);
 
       dispatch(updateLatestTrade(res));
+      dispatch(showMessage([`Trade submitted!`]));
       return dispatch(endTradeSubmit());
     } catch (err) {
       dispatch(showErrors(err));

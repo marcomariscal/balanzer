@@ -5,7 +5,6 @@ import { getExchangeRateValue } from "../helpers/exchangeRates";
 import PrimaryButton from "./PrimaryButton";
 import SwapAsset from "./SwapAsset";
 import Spinner from "./Spinner";
-import Alert from "./Alert";
 import { submitTradeInAPI, closeModal } from "../actions/trades";
 import { getTokenBalance } from "../helpers/balanceHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -41,7 +40,7 @@ const TradeWidget = () => {
 
     // submit with proper trade details
     const trade = {
-      userId: currentUser.shrimpy_user_id,
+      userId: currentUser.user.shrimpy_user_id,
       accountId: currentUser.currentAccount.id,
       fromSymbol: input.asset,
       toSymbol: output.asset,
@@ -168,10 +167,6 @@ const TradeWidget = () => {
           onAssetChange={handleAssetChange}
           disabled={true}
         />
-
-        {tradeDetails.tradeErrors.length ? (
-          <Alert danger="danger" messages={tradeDetails.tradeErrors} />
-        ) : null}
 
         <PrimaryButton
           submitFunc={handleSubmit}

@@ -5,7 +5,6 @@ export const FETCH_EXCHANGE_ASSETS = "FETCH_EXCHANGE_ASSETS";
 // currentUser types
 export const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
 export const LOGOUT_CURRENT_USER = "LOGOUT_CURRENT_USER";
-export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const FETCH_ACCOUNTS = "FETCH_ACCOUNTS";
 export const UPDATE_CURRENT_ACCOUNT = "UPDATE_CURRENT_ACCOUNT";
 export const FETCH_BALANCES = "FETCH_BALANCES";
@@ -35,6 +34,8 @@ export const SHOW_ERRORS = "SHOW_ERRORS";
 export const RESET_ERRORS = "RESET_ERRORS";
 export const SHOW_SPINNER = "SHOW_SPINNER";
 export const END_SHOW_SPINNER = "END_SHOW_SPINNER";
+export const SHOW_SUCCESS = "SHOW_SUCCESS";
+export const SHOW_MESSAGE = "SHOW_MESSAGE";
 
 // trades types
 export const FETCH_TRADES = "FETCH_TRADES";

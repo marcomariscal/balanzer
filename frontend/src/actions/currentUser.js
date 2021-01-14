@@ -1,7 +1,6 @@
 import {
   UPDATE_CURRENT_USER,
   LOGOUT_CURRENT_USER,
-  AUTH_SUCCESS,
   UPDATE_CURRENT_ACCOUNT,
   FETCH_ACCOUNTS,
   ACCOUNT_CREATED_SUCCESS,
@@ -21,7 +20,13 @@ import {
   REBALANCE_STRATEGY_UPDATED,
   CLEAR_REBALANCE_STRATEGY,
 } from "./types";
-import { showErrors, resetErrors, startLoad, stopLoad } from "./general";
+import {
+  showErrors,
+  resetErrors,
+  startLoad,
+  stopLoad,
+  showSuccess,
+} from "./general";
 import BackendAPI from "../components/BackendAPI";
 import { getExchangeAssetsFromAPI } from "./assets";
 
@@ -33,8 +38,8 @@ export function registerUserWithAPI(data) {
       const { user } = await BackendAPI.register(data);
       const newUser = await BackendAPI.getUser(user.username);
       dispatch(updateCurrentUserInStore(newUser));
-      dispatch(authSuccess());
-      return dispatch(stopLoad());
+      dispatch(stopLoad());
+      return dispatch(showSuccess([`Welcome ${user.username}!`]));
     } catch (err) {
       dispatch(showErrors(err));
       dispatch(stopLoad());
@@ -55,18 +60,12 @@ export function loginUserWithAPI(data) {
       // update all relevant user data
       dispatch(syncUserData(loggedUser.username));
 
-      dispatch(authSuccess());
-      return dispatch(stopLoad());
+      dispatch(stopLoad());
+      return dispatch(showSuccess([`Welcome ${loggedUser.username}!`]));
     } catch (err) {
       dispatch(showErrors(err));
       dispatch(stopLoad());
     }
-  };
-}
-
-function authSuccess() {
-  return {
-    type: AUTH_SUCCESS,
   };
 }
 
@@ -367,8 +366,10 @@ export function setRebalancePeriodInAPI(username, accountId, rebalancePeriod) {
         rebalancePeriod
       );
       dispatch(updatedRebalancePeriod(res));
-      return dispatch(stopLoad());
+      dispatch(stopLoad());
+      return dispatch(showSuccess(["Your rebalance period has been updated!"]));
     } catch (error) {
+      dispatch(showErrors(error));
       dispatch(stopLoad());
     }
   };

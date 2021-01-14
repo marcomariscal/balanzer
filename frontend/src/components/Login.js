@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "./Login.scss";
-import Alert from "./Alert";
 import PrimaryButton from "./PrimaryButton";
 import { registerUserWithAPI, loginUserWithAPI } from "../actions/currentUser";
 import BackendApi from "./BackendAPI";
+import { showErrors } from "../actions/general";
 
 function Login({ setToken }) {
   const dispatch = useDispatch();
@@ -64,6 +64,7 @@ function Login({ setToken }) {
       history.push("/dashboard");
     } catch (errors) {
       setIsLoading(false);
+      dispatch(showErrors(errors));
       return setLoginInfo((l) => ({ ...l, formErrors: errors }));
     }
   }
@@ -131,9 +132,6 @@ function Login({ setToken }) {
               />
             </div>
             {loginActive ? "" : signupFields}
-            {loginInfo.formErrors.length ? (
-              <Alert type="danger" messages={loginInfo.formErrors} />
-            ) : null}
 
             <PrimaryButton
               submitFunc={handleSubmit}

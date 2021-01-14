@@ -1,7 +1,6 @@
 import {
   UPDATE_CURRENT_USER,
   LOGOUT_CURRENT_USER,
-  AUTH_SUCCESS,
   ACCOUNT_CREATED,
   ACCOUNT_CREATED_SUCCESS,
   UPDATE_CURRENT_ACCOUNT,
@@ -78,8 +77,6 @@ export default function rootReducer(state = INITIAL_STATE, action) {
       return { ...state, permissions: action.permissions };
     case LOGOUT_CURRENT_USER:
       return INITIAL_STATE;
-    case AUTH_SUCCESS:
-      return { ...state, authSuccess: true };
     case USER_DATA_UPDATED:
       return { ...state, userDataUpdatedAt: Date.now() };
     case RESET_USER_ACCOUNT_INFO:

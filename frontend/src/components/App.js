@@ -7,6 +7,7 @@ import Routes from "./Routes";
 import "./App.scss";
 import { logoutUserInState, syncUserData } from "../actions/currentUser";
 import SocialLogos from "./SocialLogos";
+import Toast from "./Toast";
 
 export const TOKEN_STORAGE_ID = "cfinance-token";
 
@@ -37,6 +38,7 @@ function App() {
       </p>
       <Routes setToken={setToken} />
       <SocialLogos />
+      <Toast />
     </div>
   );
 }

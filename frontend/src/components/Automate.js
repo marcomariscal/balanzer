@@ -22,7 +22,6 @@ import BarTable from "./BarTable";
 import "./Automate.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faChartPie } from "@fortawesome/free-solid-svg-icons";
-import Spinner from "./Spinner";
 
 const Automate = () => {
   const dispatch = useDispatch();
@@ -38,6 +37,7 @@ const Automate = () => {
   const { showRebalancePeriodModal } = useSelector((st) => st.rebalance);
 
   const [isEditingStrategy, setIsEditingStrategy] = useState(false);
+  const [isRebalancing, setIsRebalancing] = useState(false);
 
   // form details to be able to update the rebalance strategy
   const [rebalanceStrategyForm, setRebalanceStrategyForm] = useState(balances);
@@ -107,6 +107,7 @@ const Automate = () => {
     e.preventDefault();
 
     dispatch(rebalanceInAPI(user.username, currentAccount.id));
+    setIsRebalancing(true);
   };
 
   const rebalancePeriodText =
@@ -136,65 +137,56 @@ const Automate = () => {
 
   return (
     <div className="Automate container text-center">
-      {loading ? (
-        <Spinner />
-      ) : (
-        <>
-          <div className="summary">
-            <button
-              className="automate-view-button"
-              onClick={handleShowPeriodSelectModal}
-            >
-              <div className="icon-wrapper">
-                <FontAwesomeIcon icon={faEdit} className="edit-icon" />
-              </div>
-              <Summary
-                title={rebalancePeriodText}
-                subTitle={"Current Rebalance Period"}
-                loading={loading}
-              />
-            </button>
-            {balances.length &&
-            rebalanceStrategy.allocations.length &&
-            !isEditingStrategy ? (
-              <button
-                className="automate-view-button"
-                onClick={handleRebalanceNow}
-              >
-                <div className="pie-icon">
-                  <FontAwesomeIcon icon={faChartPie} className="pie-icon" />
-                </div>
-                <Summary title={"Rebalance Now"} loading={loading} />
-              </button>
-            ) : null}
-            <Summary title={totalBalanceUSD} subTitle={"Portfolio Balance"} />
+      <div className="summary">
+        <button
+          className="automate-view-button"
+          onClick={handleShowPeriodSelectModal}
+        >
+          <div className="icon-wrapper">
+            <FontAwesomeIcon icon={faEdit} className="edit-icon" />
           </div>
-
-          <RebalancePeriodSelectModal
-            showModal={showRebalancePeriodModal}
-            closeModal={handleClosePeriodSelectModal}
-            handleSubmit={handleRebalancePeriodChange}
+          <Summary
+            title={rebalancePeriodText}
+            subTitle={"Current Rebalance Period"}
+            loading={loading}
           />
-          <div className="bartable-wrapper">
-            {isEditingStrategy ? (
-              <EditRebalanceStrategyForm
-                rebalanceStrategyForm={rebalanceStrategyForm}
-                cancelEdit={handleEditRebalanceStrategy}
-                handleAddAsset={handleAddAssetToStrategy}
-                rebalanceStrategy={rebalanceStrategy}
-                setRebalanceStrategy={setRebalanceStrategyForm}
-                submitStrategy={handleSubmitStrategy}
-              />
-            ) : (
-              <BarTable
-                handleEdit={handleEditRebalanceStrategy}
-                rebalanceStrategyForm={rebalanceStrategyForm}
-                handleAddAsset={handleAddAssetToStrategy}
-              />
-            )}
-          </div>
-        </>
-      )}
+        </button>
+        {balances.length &&
+        rebalanceStrategy.allocations.length &&
+        !isEditingStrategy ? (
+          <button className="automate-view-button" onClick={handleRebalanceNow}>
+            <div className="pie-icon">
+              <FontAwesomeIcon icon={faChartPie} className="pie-icon" />
+            </div>
+            <Summary title={"Rebalance Now"} loading={isRebalancing} />
+          </button>
+        ) : null}
+        <Summary title={totalBalanceUSD} subTitle={"Portfolio Balance"} />
+      </div>
+
+      <RebalancePeriodSelectModal
+        showModal={showRebalancePeriodModal}
+        closeModal={handleClosePeriodSelectModal}
+        handleSubmit={handleRebalancePeriodChange}
+      />
+      <div className="bartable-wrapper">
+        {isEditingStrategy ? (
+          <EditRebalanceStrategyForm
+            rebalanceStrategyForm={rebalanceStrategyForm}
+            cancelEdit={handleEditRebalanceStrategy}
+            handleAddAsset={handleAddAssetToStrategy}
+            rebalanceStrategy={rebalanceStrategy}
+            setRebalanceStrategy={setRebalanceStrategyForm}
+            submitStrategy={handleSubmitStrategy}
+          />
+        ) : (
+          <BarTable
+            handleEdit={handleEditRebalanceStrategy}
+            rebalanceStrategyForm={rebalanceStrategyForm}
+            handleAddAsset={handleAddAssetToStrategy}
+          />
+        )}
+      </div>
     </div>
   );
 };
