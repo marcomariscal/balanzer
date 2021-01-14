@@ -425,8 +425,6 @@ function fetchRebalanceStrategy(rebalanceStrategy) {
 
 export function setRebalanceStrategyInAPI(username, accountId, allocations) {
   return async function (dispatch) {
-    dispatch(startLoad());
-
     try {
       const res = await BackendAPI.setRebalanceStrategy(
         username,
@@ -434,9 +432,11 @@ export function setRebalanceStrategyInAPI(username, accountId, allocations) {
         allocations
       );
       dispatch(setRebalanceStrategy(res));
-      return dispatch(stopLoad());
+      return dispatch(showSuccess([`Sucessfully updated strategy!`]));
     } catch (error) {
-      dispatch(stopLoad());
+      showErrors([
+        `Hmm something happened and we weren't able to update your strategy`,
+      ]);
     }
   };
 }

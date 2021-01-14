@@ -40,7 +40,12 @@ const Automate = () => {
   const [isRebalancing, setIsRebalancing] = useState(false);
 
   // form details to be able to update the rebalance strategy
-  const [rebalanceStrategyForm, setRebalanceStrategyForm] = useState(balances);
+  const [rebalanceStrategyForm, setRebalanceStrategyForm] = useState(
+    balances.map((bal) => ({
+      ...bal,
+      allocationPct: Number(bal.allocationPct),
+    }))
+  );
 
   const handleAddAssetToStrategy = (symbol) => {
     const hasSymbol = _.some(rebalanceStrategyForm, ["symbol", symbol]);
@@ -105,9 +110,9 @@ const Automate = () => {
 
   const handleRebalanceNow = (e) => {
     e.preventDefault();
-
-    dispatch(rebalanceInAPI(user.username, currentAccount.id));
     setIsRebalancing(true);
+    dispatch(rebalanceInAPI(user.username, currentAccount.id));
+    setIsRebalancing(false);
   };
 
   const rebalancePeriodText =

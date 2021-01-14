@@ -37,13 +37,12 @@ const EditRebalanceStrategyForm = ({
     );
   };
 
+  const pctTotal = rebalanceStrategyForm.reduce((total, curr) => {
+    return total + curr.allocationPct;
+  }, 0);
   // only handle checking for valid form when the user stop dragging the range input
   const handleChangeComplete = (name, value) => {
     // check new strategy percent total
-    const pctTotal = rebalanceStrategyForm.reduce((total, curr) => {
-      return total + curr.allocationPct;
-    }, 0);
-
     pctTotal === 100 ? setIsInvalidForm(false) : setIsInvalidForm(true);
   };
 
@@ -97,7 +96,7 @@ const EditRebalanceStrategyForm = ({
         />
         <PrimaryButton
           submitFunc={submitStrategy}
-          textDisabled="Percentages must add up to 100%"
+          textDisabled={`Percentages must add up to 100% - currently at ${pctTotal}%`}
           textPrimary="Edit Strategy"
           loadingText="Editing Strategy"
           disabled={isInvalidForm}
