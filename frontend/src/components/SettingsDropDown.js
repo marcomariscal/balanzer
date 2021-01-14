@@ -26,21 +26,13 @@ const SettingsDropDown = () => {
   const dispatch = useDispatch();
 
   const handleAccountSettingChange = (checked) => {
-    setLoadingAccountPermish(true);
-
     const data = { account: checked, trade: permissions.trade };
     dispatch(updatePermissionsInAPI(user.username, data));
-
-    setLoadingAccountPermish(false);
   };
 
   const handleTradeSettingChange = (checked) => {
-    setLoadingTradePermish(true);
-
     const data = { trade: checked, account: permissions.account };
     dispatch(updatePermissionsInAPI(user.username, data));
-
-    setLoadingTradePermish(false);
   };
 
   const handleDeleteAccount = (e) => {
@@ -54,7 +46,6 @@ const SettingsDropDown = () => {
     async function getPermissions() {
       dispatch(getPermissionsFromAPI(user.username));
     }
-
     getPermissions();
   }, []);
 

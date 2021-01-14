@@ -26,6 +26,7 @@ import {
   startLoad,
   stopLoad,
   showSuccess,
+  showMessage,
 } from "./general";
 import BackendAPI from "../components/BackendAPI";
 import { getExchangeAssetsFromAPI } from "./assets";
@@ -121,11 +122,15 @@ export function createAccountInAPI(username, data) {
     dispatch(creatingAccount());
     try {
       const accountId = await BackendAPI.createAccount(username, data);
-      const newAccount = await BackendAPI.getAccount(accountId);
+      const newAccount = await BackendAPI.getAccount(username, accountId);
+
       syncUserData(username, accountId);
       dispatch(createAccountSuccessInState(newAccount.exchange));
+      dispatch(stopCreatingAccount());
 
-      return dispatch(stopCreatingAccount());
+      return dispatch(
+        showSuccess([`Successfully connected to ${newAccount.exchange}`])
+      );
     } catch (err) {
       dispatch(stopCreatingAccount());
       dispatch(showErrors(err));
@@ -144,6 +149,7 @@ export function deleteAccountInAPI(username, accountId) {
     try {
       await BackendAPI.deleteAccount(username, accountId);
       dispatch(accountDeleted(accountId));
+      dispatch(showMessage([`Disconnected from exchange`]));
       return dispatch(syncUserData(username));
     } catch (err) {
       dispatch(showErrors(err));
@@ -316,8 +322,15 @@ function fetchPermissions(permissions) {
 
 export function updatePermissionsInAPI(username, data) {
   return async function (dispatch) {
-    const response = await BackendAPI.updatePermissions(username, data);
-    return dispatch(updatePermissions(response));
+    try {
+      const response = await BackendAPI.updatePermissions(username, data);
+      dispatch(updatePermissions(response));
+      return dispatch(
+        showSuccess([`Successfully updated permission settings!`])
+      );
+    } catch (error) {
+      showErrors(error);
+    }
   };
 }
 

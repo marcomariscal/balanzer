@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { createAccountInAPI } from "../actions/currentUser";
 import { Form } from "react-bootstrap";
 import exchangesWithPassphrases from "../helpers/exchangesWithPassphrase";
@@ -10,19 +9,20 @@ import PrimaryButton from "./PrimaryButton";
 
 const ExchangeConnectionForm = ({ exchangeName }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const { user, creatingAccount } = useSelector((st) => st.currentUser);
 
   // show the passphrase input if the exchange requires it
   const hasPassphrase =
     exchangesWithPassphrases.indexOf(exchangeName) !== -1 ? true : false;
 
-  const [formData, setFormData] = useState({
+  const INITIAL_FORM_STATE = {
     publicKey: "",
     privateKey: "",
     passphrase: "",
     formErrors: [],
-  });
+  };
+
+  const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const [inValidForm, setInvalidForm] = useState(true);
 
   const handleChange = (e) => {
@@ -47,7 +47,7 @@ const ExchangeConnectionForm = ({ exchangeName }) => {
     // create exchange account connection using the api key user inputted data and the exchange name
     try {
       dispatch(createAccountInAPI(username, accountData));
-      history.push("/dashboard");
+      setFormData(INITIAL_FORM_STATE);
     } catch (errors) {
       setFormData((fData) => ({
         ...fData,

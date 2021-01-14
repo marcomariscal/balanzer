@@ -183,7 +183,7 @@ router.get(
 );
 
 /** POST /[username] => {accountId: accountId}
- * creates an account in the Shrimpy API
+ * creates an account in the Shrimpy API associated with an exchange connection
  */
 
 router.post("/:username", ensureCorrectUser, async function (req, res, next) {
