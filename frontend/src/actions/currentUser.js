@@ -20,19 +20,13 @@ import {
   REBALANCE_STRATEGY_UPDATED,
   CLEAR_REBALANCE_STRATEGY,
 } from "./types";
-import {
-  showErrors,
-  resetMessages,
-  startLoad,
-  stopLoad,
-  showSuccess,
-  showMessage,
-} from "./general";
+import { showMessage, resetMessages, startLoad, stopLoad } from "./general";
 import BackendAPI from "../components/BackendAPI";
 import { getExchangeAssetsFromAPI } from "./assets";
 
 export function registerUserWithAPI(data) {
   return async function (dispatch) {
+    dispatch(resetMessages());
     dispatch(startLoad());
 
     try {
@@ -40,9 +34,12 @@ export function registerUserWithAPI(data) {
       const newUser = await BackendAPI.getUser(user.username);
       dispatch(updateCurrentUserInStore(newUser));
       dispatch(stopLoad());
-      return dispatch(showSuccess([`Welcome ${user.username}!`]));
+      dispatch(
+        showMessage({ type: "success", text: [`Welcome ${user.username}!`] })
+      );
+      dispatch(resetMessages());
     } catch (err) {
-      dispatch(showErrors(err));
+      dispatch(showMessage({ type: "error", text: err }));
       dispatch(stopLoad());
     }
   };
@@ -50,6 +47,7 @@ export function registerUserWithAPI(data) {
 
 export function loginUserWithAPI(data) {
   return async function (dispatch) {
+    dispatch(resetMessages());
     dispatch(startLoad());
 
     try {
@@ -59,12 +57,19 @@ export function loginUserWithAPI(data) {
       const loggedUser = await BackendAPI.getUser(user.username);
 
       // update all relevant user data
-      dispatch(syncUserData(loggedUser.username));
 
+      dispatch(syncUserData(loggedUser.username));
       dispatch(stopLoad());
-      return dispatch(showSuccess([`Welcome ${loggedUser.username}!`]));
+      dispatch(
+        showMessage({
+          type: "success",
+          text: [`Welcome ${loggedUser.username}!`],
+        })
+      );
+      return dispatch(resetMessages());
+      // return dispatch(resetMessages());
     } catch (err) {
-      dispatch(showErrors(err));
+      dispatch(showMessage({ type: "error", text: err }));
       dispatch(stopLoad());
     }
   };
@@ -85,12 +90,14 @@ function updateCurrentUser(user) {
 
 export function logoutUserInState() {
   return async function (dispatch) {
-    dispatch(resetMessages());
-    return dispatch(logoutUser());
+    dispatch(logoutUser());
+    return dispatch(
+      showMessage({ type: "success", text: [`Successfully logged out`] })
+    );
   };
 }
 
-function logoutUser(user) {
+function logoutUser() {
   return {
     type: LOGOUT_CURRENT_USER,
   };
@@ -103,9 +110,9 @@ export function getAccountsFromAPI(username) {
       const response = await BackendAPI.getAccounts(username);
       dispatch(fetchAccounts(response));
       return dispatch(stopLoad());
-    } catch (error) {
-      dispatch(showErrors());
-      return dispatch(stopLoad());
+    } catch (err) {
+      dispatch(showMessage({ type: "error", text: err }));
+      dispatch(stopLoad());
     }
   };
 }
@@ -129,11 +136,14 @@ export function createAccountInAPI(username, data) {
       dispatch(stopCreatingAccount());
 
       return dispatch(
-        showSuccess([`Successfully connected to ${newAccount.exchange}`])
+        showMessage({
+          type: "success",
+          text: [`Successfully connected to ${newAccount.exchange}`],
+        })
       );
     } catch (err) {
+      dispatch(showMessage({ type: "error", text: err }));
       dispatch(stopCreatingAccount());
-      dispatch(showErrors(err));
     }
   };
 }
@@ -149,10 +159,12 @@ export function deleteAccountInAPI(username, accountId) {
     try {
       await BackendAPI.deleteAccount(username, accountId);
       dispatch(accountDeleted(accountId));
-      dispatch(showMessage([`Disconnected from exchange`]));
-      return dispatch(syncUserData(username));
+      dispatch(syncUserData(username));
+      return dispatch(
+        showMessage({ type: "success", text: [`Disconnected from exchange`] })
+      );
     } catch (err) {
-      dispatch(showErrors(err));
+      dispatch(showMessage({ type: "error", text: err }));
     }
   };
 }
@@ -194,9 +206,9 @@ export function getAccountBalancesFromAPI(username, accountName, date = null) {
       );
       dispatch(fetchBalances(response));
       return dispatch(stopLoad());
-    } catch (error) {
-      dispatch(showErrors());
-      return dispatch(stopLoad());
+    } catch (err) {
+      dispatch(showMessage({ type: "error", text: err }));
+      dispatch(stopLoad());
     }
   };
 }
@@ -242,7 +254,6 @@ export function syncUserData(username, accountId = null) {
       // return if there are no accounts
       if (accounts.length === 0) {
         dispatch(resetUserAccountInfo(user.username));
-        dispatch(stopLoad());
         return;
       }
 
@@ -254,6 +265,7 @@ export function syncUserData(username, accountId = null) {
         user.username,
         accountIdToUse
       );
+
       dispatch(updateCurrentAccountInState(currAccount));
 
       // update account balances
@@ -277,10 +289,11 @@ export function syncUserData(username, accountId = null) {
       dispatch(getBalanceHistoryFromAPI(user.username, accountIdToUse, "All"));
 
       dispatch(userDataUpdated());
-      return dispatch(stopLoad());
-    } catch (error) {
-      dispatch(showErrors());
-      return dispatch(stopLoad());
+      dispatch(stopLoad());
+      return dispatch(resetMessages());
+    } catch (err) {
+      dispatch(showMessage({ type: "error", text: err }));
+      dispatch(stopLoad());
     }
   };
 }
@@ -304,9 +317,9 @@ export function getPermissionsFromAPI(username) {
       const response = await BackendAPI.getPermissions(username);
       dispatch(fetchPermissions(response));
       return dispatch(stopLoad());
-    } catch (error) {
+    } catch (err) {
+      dispatch(showMessage({ type: "error", text: err }));
       dispatch(stopLoad());
-      dispatch(showErrors(error));
     }
 
     return dispatch(stopLoad());
@@ -326,10 +339,13 @@ export function updatePermissionsInAPI(username, data) {
       const response = await BackendAPI.updatePermissions(username, data);
       dispatch(updatePermissions(response));
       return dispatch(
-        showSuccess([`Successfully updated permission settings!`])
+        showMessage({
+          type: "success",
+          text: [`Successfully updated permission settings!`],
+        })
       );
-    } catch (error) {
-      showErrors(error);
+    } catch (err) {
+      dispatch(showMessage({ type: "error", text: err }));
     }
   };
 }
@@ -345,7 +361,10 @@ export function updateCurrentAccountInState(account) {
   return async function (dispatch) {
     dispatch(updateCurrentAccount(account));
     return dispatch(
-      showMessage([`You are now looking at your ${account.exchange} account`])
+      showMessage({
+        type: "regular",
+        text: [`You are now looking at your ${account.exchange} account`],
+      })
     );
   };
 }
@@ -383,9 +402,14 @@ export function setRebalancePeriodInAPI(username, accountId, rebalancePeriod) {
       );
       dispatch(updatedRebalancePeriod(res));
       dispatch(stopLoad());
-      return dispatch(showSuccess(["Your rebalance period has been updated!"]));
-    } catch (error) {
-      dispatch(showErrors(error));
+      return dispatch(
+        showMessage({
+          type: "success",
+          text: ["Your rebalance period has been updated!"],
+        })
+      );
+    } catch (err) {
+      dispatch(showMessage({ type: "error", text: err }));
       dispatch(stopLoad());
     }
   };
@@ -435,11 +459,19 @@ export function setRebalanceStrategyInAPI(username, accountId, allocations) {
         allocations
       );
       dispatch(setRebalanceStrategy(res));
-      return dispatch(showSuccess([`Sucessfully updated strategy!`]));
-    } catch (error) {
-      showErrors([
-        `Hmm something happened and we weren't able to update your strategy`,
-      ]);
+      return dispatch(
+        showMessage({
+          type: "success",
+          text: [`Sucessfully updated strategy!`],
+        })
+      );
+    } catch (err) {
+      showMessage({
+        type: "error",
+        text: [
+          `Hmm something happened and we weren't able to update your strategy`,
+        ],
+      });
     }
   };
 }

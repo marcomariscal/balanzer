@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import {
   getRebalancePeriodFromAPI,
   getRebalanceStrategyFromAPI,
@@ -32,7 +32,7 @@ const Automate = () => {
     rebalancePeriod,
     totalBalanceUSD,
     balances,
-  } = useSelector((st) => st.currentUser);
+  } = useSelector((st) => st.currentUser, shallowEqual);
   const { loading } = useSelector((st) => st.general);
   const { showRebalancePeriodModal } = useSelector((st) => st.rebalance);
 
@@ -58,15 +58,6 @@ const Automate = () => {
     }
     dispatch(closeRebalanceAssetSelectModal());
   };
-
-  useEffect(() => {
-    async function getRebalanceInfo() {
-      dispatch(getRebalancePeriodFromAPI(user.username, currentAccount.id));
-      dispatch(getRebalanceStrategyFromAPI(user.username, currentAccount.id));
-    }
-
-    getRebalanceInfo();
-  }, [rebalancePeriod, currentAccount.id, dispatch, user.username]);
 
   const handleRebalancePeriodChange = (e) => {
     dispatch(
@@ -100,10 +91,16 @@ const Automate = () => {
       })
     );
 
-    allocations = allocations.filter((bal) => bal.percent !== "0");
+    const filteredAllocations = allocations.filter(
+      (bal) => bal.percent !== "0"
+    );
 
     dispatch(
-      setRebalanceStrategyInAPI(user.username, currentAccount.id, allocations)
+      setRebalanceStrategyInAPI(
+        user.username,
+        currentAccount.id,
+        filteredAllocations
+      )
     );
     dispatch(syncUserData(user.username, currentAccount.id));
   };
@@ -156,7 +153,8 @@ const Automate = () => {
             loading={loading}
           />
         </button>
-        {balances.length &&
+        {currentAccount &&
+        balances.length &&
         rebalanceStrategy.allocations.length &&
         !isEditingStrategy ? (
           <button className="automate-view-button" onClick={handleRebalanceNow}>

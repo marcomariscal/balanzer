@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import "./Login.scss";
 import PrimaryButton from "./PrimaryButton";
 import { registerUserWithAPI, loginUserWithAPI } from "../actions/currentUser";
+import { showMessage } from "../actions/general";
 import BackendApi from "./BackendAPI";
-import { showErrors } from "../actions/general";
 
 function Login({ setToken }) {
   const dispatch = useDispatch();
@@ -62,10 +62,10 @@ function Login({ setToken }) {
       setToken(res.token);
       setIsLoading(false);
       history.push("/dashboard");
-    } catch (errors) {
+    } catch (err) {
       setIsLoading(false);
-      dispatch(showErrors(errors));
-      return setLoginInfo((l) => ({ ...l, formErrors: errors }));
+      dispatch(showMessage({ type: "error", text: err }));
+      return setLoginInfo((l) => ({ ...l, formErrors: err }));
     }
   }
 

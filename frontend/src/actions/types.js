@@ -30,12 +30,10 @@ export const FETCH_USER = "FETCH_USER";
 export const FETCH_USERS = "FETCH_USERS";
 
 // general types
-export const SHOW_ERRORS = "SHOW_ERRORS";
+export const SHOW_MESSAGE = "SHOW_MESSAGE";
 export const RESET_MESSAGES = "RESET_MESSAGES";
 export const SHOW_SPINNER = "SHOW_SPINNER";
 export const END_SHOW_SPINNER = "END_SHOW_SPINNER";
-export const SHOW_SUCCESS = "SHOW_SUCCESS";
-export const SHOW_MESSAGE = "SHOW_MESSAGE";
 
 // trades types
 export const FETCH_TRADES = "FETCH_TRADES";
@@ -58,3 +56,6 @@ export const SHOW_REBALANCE_ASSET_SELECT_MODAL =
 export const CLOSE_REBALANCE_PERIOD_MODAL = "CLOSE_REBALANCE_PERIOD_MODAL";
 export const CLOSE_REBALANCE_ASSET_SELECT_MODAL =
   "CLOSE_REBALANCE_ASSET_SELECT_MODAL";
+
+// backtest types
+export const FETCH_BACKTEST_ASSETS = "FETCH_BACKTEST_ASSETS";

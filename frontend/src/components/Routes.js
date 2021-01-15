@@ -42,9 +42,9 @@ const Routes = ({ setToken }) => {
           <Trade />
         </PrivateRoute>
 
-        <Route exact path="/backtest">
+        <PrivateRoute exact path="/backtest">
           <Backtest />
-        </Route>
+        </PrivateRoute>
 
         <Redirect to="/" />
       </Switch>

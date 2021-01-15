@@ -3,14 +3,16 @@
 const express = require("express");
 const Decimal = require("decimal.js");
 const client = require("../helpers/shrimpy");
+const { authRequired } = require("../middleware/auth");
 
 const router = express.Router();
 
-/** GET / => {assets: [...exchangeAsset] } */
+/** GET /assets => {backtestAssets: [...exchangeAsset] } */
 
-router.get("/assets", async function (req, res, next) {
+router.get("/", authRequired, async function (req, res, next) {
   try {
-    const { exchange } = req.body;
+    // default exchange is "coinbasepro"
+    const exchange = "coinbasepro";
     const backtestAssets = await client.getBacktestAssets(exchange);
     return res.json({ backtestAssets });
   } catch (err) {
@@ -18,17 +20,17 @@ router.get("/assets", async function (req, res, next) {
   }
 });
 
-/** GET / => {results: {rebalanceData: [...], holdingData: [...] }} */
+/** GET /run => {backtestResults: {rebalancingData: [...], holdingData: [...] }} */
 
-router.get("/run", async function (req, res, next) {
+router.get("/run", authRequired, async function (req, res, next) {
   try {
     req.body = {
       exchange: "binance", // exchange
-      rebalancePeriod: 10, // rebalancePeriod in hours
+      rebalancePeriod: 24, // rebalancePeriod in hours
       fee: new Decimal(0.1), // fee in percent
-      startTime: new Date("2018-05-19T00:00:00.000Z"), // startTime
-      endTime: new Date("2018-11-02T00:00:00.000Z"), // endTime
-      initialValue: new Decimal(5000), // initialValue in USD
+      startTime: new Date("2020-05-19T00:00:00.000Z"), // startTime
+      endTime: new Date("2020-11-02T00:00:00.000Z"), // endTime
+      initialValue: new Decimal(10000), // initialValue in USD
       allocations: [
         { symbol: "BTC", percent: new Decimal(50) },
         { symbol: "ETH", percent: new Decimal(50) },

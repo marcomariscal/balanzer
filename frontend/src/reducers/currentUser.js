@@ -21,6 +21,7 @@ import {
   REBALANCE_STRATEGY_UPDATED,
 } from "../actions/types";
 import { totalBalanceUSD } from "../helpers/balanceHelpers";
+import { sortByAssetBalance } from "./helpers/helpers";
 
 const INITIAL_STATE = {
   accounts: [],
@@ -31,10 +32,6 @@ const INITIAL_STATE = {
   balances: [],
   balanceHistory: [],
 };
-
-function sortByAssetBalance(balances) {
-  return balances.sort((a, b) => b.usdValue - a.usdValue);
-}
 
 export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {

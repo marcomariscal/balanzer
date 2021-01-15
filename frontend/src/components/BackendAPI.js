@@ -113,10 +113,9 @@ class BackendAPI {
   }
 
   // backtest endpoints
-  // pass in the exchange name you want to see the assets for as a parameter
-  static async getBacktestAssets(data) {
-    let res = await this.request("exchanges", data);
-    return res.assets;
+  static async getBacktestAssets() {
+    let res = await this.request(`backtest/assets`);
+    return res.backtestAssets;
   }
 
   // user trades endpoint

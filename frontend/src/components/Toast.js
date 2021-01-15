@@ -5,33 +5,26 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Toast = () => {
-  const { errors, successMsg, message } = useSelector((st) => st.general);
-  const toastyMessage = () =>
-    toast(<Alert messages={message} />, { toastId: "1" });
-  const toastyError = () =>
-    toast.error(<Alert messages={errors} />, { toastId: "2" });
-  const toastySuccess = () =>
-    toast.success(
-      <Alert
-        messages={successMsg.length === 1 ? [...successMsg] : successMsg}
-      />,
+  const { message } = useSelector((st) => st.general);
+  const toastyMessage = () => {
+    if (message.type === "error") {
+      toast.error(<Alert message={message.text} />, { toastId: 1 });
+    } else if (message.type === "success") {
+      toast.success(<Alert message={message.text} />, {
+        toastId: 2,
+      });
+    } else {
+      toast(<Alert message={message.text} />, { toastId: 3 });
+    }
+  };
 
-      { toastId: "3" }
-    );
-
-  if (errors && errors.length) {
-    toastyError();
-  } else if (successMsg) {
-    toastySuccess();
-  } else if (message) {
-    toastyMessage();
-  }
+  message && toastyMessage();
 
   return (
     <div>
       <ToastContainer
         position="bottom-left"
-        autoClose={5000}
+        autoClose={3500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

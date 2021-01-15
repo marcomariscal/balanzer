@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { decode } from "jsonwebtoken";
 import useLocalStorage from "./hooks/useLocalStorage";
 import Navigation from "./Navigation";
@@ -14,12 +14,13 @@ export const TOKEN_STORAGE_ID = "cfinance-token";
 function App() {
   const dispatch = useDispatch();
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  const { currentAccount } = useSelector((st) => st.currentUser);
 
   useEffect(() => {
     async function syncUserInfo() {
       if (token) {
         const { username } = decode(token);
-        dispatch(syncUserData(username));
+        dispatch(syncUserData(username, currentAccount && currentAccount.id));
       }
     }
     syncUserInfo();

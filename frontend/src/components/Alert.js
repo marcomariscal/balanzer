@@ -1,11 +1,10 @@
 import React from "react";
 
-function Alert({ type, messages }) {
-  return <div>{messages.map((m) => m)}</div>;
+function Alert({ message }) {
+  return <div>{message.map((m) => m)}</div>;
 }
 
 Alert.defaultProps = {
-  type: "danger",
   messages: [],
 };
 
