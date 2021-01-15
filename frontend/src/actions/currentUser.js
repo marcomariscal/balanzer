@@ -22,7 +22,7 @@ import {
 } from "./types";
 import {
   showErrors,
-  resetErrors,
+  resetMessages,
   startLoad,
   stopLoad,
   showSuccess,
@@ -85,7 +85,7 @@ function updateCurrentUser(user) {
 
 export function logoutUserInState() {
   return async function (dispatch) {
-    dispatch(resetErrors());
+    dispatch(resetMessages());
     return dispatch(logoutUser());
   };
 }
@@ -231,7 +231,7 @@ function fetchBalanceHistory(balanceHistory) {
 export function syncUserData(username, accountId = null) {
   return async function (dispatch) {
     dispatch(startLoad());
-    dispatch(resetErrors());
+    dispatch(resetMessages());
     try {
       // sync user
       const user = await BackendAPI.getUser(username);

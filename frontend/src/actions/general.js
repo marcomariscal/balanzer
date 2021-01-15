@@ -2,9 +2,9 @@ import {
   SHOW_SPINNER,
   END_SHOW_SPINNER,
   SHOW_ERRORS,
-  RESET_ERRORS,
   SHOW_SUCCESS,
   SHOW_MESSAGE,
+  RESET_MESSAGES,
 } from "./types";
 
 export function startLoad() {
@@ -28,9 +28,9 @@ export function showErrors(msgs) {
   };
 }
 
-export function resetErrors() {
+export function resetMessages() {
   return {
-    type: RESET_ERRORS,
+    type: RESET_MESSAGES,
   };
 }
 

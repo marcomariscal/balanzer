@@ -31,7 +31,7 @@ export const FETCH_USERS = "FETCH_USERS";
 
 // general types
 export const SHOW_ERRORS = "SHOW_ERRORS";
-export const RESET_ERRORS = "RESET_ERRORS";
+export const RESET_MESSAGES = "RESET_MESSAGES";
 export const SHOW_SPINNER = "SHOW_SPINNER";
 export const END_SHOW_SPINNER = "END_SHOW_SPINNER";
 export const SHOW_SUCCESS = "SHOW_SUCCESS";
