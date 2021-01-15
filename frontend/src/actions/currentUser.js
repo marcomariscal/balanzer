@@ -254,7 +254,7 @@ export function syncUserData(username, accountId = null) {
         user.username,
         accountIdToUse
       );
-      dispatch(updateCurrentAccount(currAccount));
+      dispatch(updateCurrentAccountInState(currAccount));
 
       // update account balances
       const balances = await BackendAPI.getAccountBalances(
@@ -343,7 +343,10 @@ function updatePermissions(permissions) {
 
 export function updateCurrentAccountInState(account) {
   return async function (dispatch) {
-    return dispatch(updateCurrentAccount(account));
+    dispatch(updateCurrentAccount(account));
+    return dispatch(
+      showMessage([`You are now looking at your ${account.exchange} account`])
+    );
   };
 }
 
