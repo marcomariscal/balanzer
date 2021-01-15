@@ -1,6 +1,6 @@
 import React from "react";
 
-function Alert({ message }) {
+function Alert({ message = null }) {
   return <div>{message.map((m) => m)}</div>;
 }
 
