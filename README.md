@@ -55,6 +55,10 @@ The production version can be found here:
 
 **https://www.balanzer.finance/**
 
+And a demo here:
+
+**https://youtu.be/Z8wTEMfresI**
+
 **The product is currently under active development and is in beta. Use at your own risk. This tool is also not financial advice and please do your own research when investing in cryptocurrencies.**
 
 To be able to use Balanzer, you must connect to the exchange(s) that you would like to use Balanzer with.
